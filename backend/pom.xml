@@ -10,7 +10,7 @@
 	</parent>
 
 	<groupId>no.idata1002.group19</groupId>
-	<artifactId>budgeting-app</artifactId>
+	<artifactId>backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>budgeting-app</name>
 	<description>Demo project for Spring Boot</description>

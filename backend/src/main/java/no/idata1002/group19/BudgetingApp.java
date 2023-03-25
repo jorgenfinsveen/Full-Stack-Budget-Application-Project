@@ -10,6 +10,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.core.env.Environment;
 
+import no.idata1002.group19.domain.entity.User;
+import no.idata1002.group19.domain.repository.UserRepository;
+
 /**
  * <h1>Budgeting App</h1>
  * 
@@ -33,6 +36,8 @@ public class BudgetingApp implements CommandLineRunner {
 	/** Logger element for logging application events to STDOUT. */
 	private static final Logger LOG = LoggerFactory.getLogger(BudgetingApp.class);
 
+	@Autowired
+	private UserRepository userRepository;
 
 	/**
 	 * Main method which is called upon application startup.
@@ -65,5 +70,18 @@ public class BudgetingApp implements CommandLineRunner {
 
 		/* Log initial status to STDOUT. */
 		LOG.info("Server instance initialized: " + ip + ":" + port);
+		populateUserDb();
+	}
+
+
+	private void populateUserDb() {
+		User user1 = new User("username_1", "password_1");
+		User user2 = new User("username_2", "password_2");
+		User user3 = new User("username_3", "password_3");
+
+		userRepository.deleteAll();
+		userRepository.save(user1);
+		userRepository.save(user2);
+		userRepository.save(user3);
 	}
 }

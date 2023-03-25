@@ -1,0 +1,25 @@
+* {
+    text-align: center;
+}
+
+h1 {
+    font-size: 2.5em;
+    text-align: left;
+    padding-left: 5rem;
+}
+
+h2 {
+    padding-left: 5rem;
+}
+
+article {
+    width: 100%;
+}
+
+#budget-limit {
+    width: 70rem;
+}
+
+#monthly-category-budget {
+    width: 70rem;
+}

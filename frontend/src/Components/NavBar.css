@@ -1,0 +1,31 @@
+nav {
+    width: 15rem;
+}
+
+ul {
+    list-style-type: none;
+    padding-top: 7rem;
+}
+
+li {
+    font-size: 1.5rem;
+    margin-right: 1.5rem;
+}
+
+#li-dashboard {
+    padding: 3rem;
+}
+
+#li-budget {
+    padding: 3rem;
+}
+
+#li-analytics {
+    padding: 3rem;
+}
+
+#li-login {
+    padding-top: 3rem;
+    padding-left: 3rem;
+    padding-right: 3rem;
+}

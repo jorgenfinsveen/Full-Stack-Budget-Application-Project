@@ -1,7 +1,7 @@
 import './NavBar.css';
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGauge, faCoins, faChartLine, faUser } from '@fortawesome/free-solid-svg-icons'
+import { faGauge, faCoins, faChartLine, faUser } from '@fortawesome/free-solid-svg-icons';
 import { ActiveLink } from "./ActiveLink";
 
 export function NavBar() {

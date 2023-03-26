@@ -1,0 +1,36 @@
+* {
+    text-align: center;
+}
+
+h1 {
+    font-size: 2.5em;
+    text-align: left;
+    padding-left: 5rem;
+}
+
+h2 {
+    padding-left: 5rem;
+}
+
+#title {
+    display: left;
+    padding-right: 4rem;
+}
+
+#date {
+    display: inline-flex;
+}
+
+article {
+    width: 100%;
+}
+
+#linechart {
+    padding-left: 6rem;
+    width: 60rem;
+}
+
+#barchart {
+    padding-left: 6rem;
+    width: 60rem;
+}

@@ -1,10 +1,11 @@
 section {
-  display: inline-flex;
-  width: 100%;
+    display: inline-flex;
+    width: 100%;
 }
 
 section::after {
-  content: "";
-  display: table;
-  clear: both;
+    content: "";
+    display: table;
+    clear: both;
 }
+

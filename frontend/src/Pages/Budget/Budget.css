@@ -16,7 +16,7 @@ article {
     width: 100%;
 }
 
-#limit-label {
+#margin-label {
     padding-left: 0rem;
 }
 
@@ -30,7 +30,7 @@ article {
     margin-right: auto;
 }
 
-#budget-limit {
+#budget-margin {
     width: 35rem;
     margin-left: auto;
     margin-right: auto;

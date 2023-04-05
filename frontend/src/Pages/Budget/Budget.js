@@ -88,8 +88,8 @@ export function Budget() {
                     </tr>
                 </table>
             </div>
-            <div id="budget-limit">
-                <h2 id="limit-label">Limit</h2>
+            <div id="budget-margin">
+                <h2 id="margin-label">Margin</h2>
                 <Slider/>
                 <br/><br/><br/>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>

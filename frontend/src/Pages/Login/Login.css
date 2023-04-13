@@ -1,46 +1,80 @@
-article {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
+#login-article {
+    width: 100%;
 }
 
-body {
-    font-family: Roboto, sans-serif;
-    margin: 0;
-    padding: 0;
+#login-header {
+    font-size: 2.5em;
 }
 
-section{
-    box-shadow: 0.2rem 0.2rem 1rem 0.2rem #cbcbcb;
-    padding-left: 5rem;
-    padding-right: 5rem;
-    padding-bottom: 3rem;
-    margin-top: 10rem;
+#login-header-container {
+    width: 65rem;
 }
 
-h1 {
-    font-size: 7rem;
-}
-
-ul {
+.login-ul {
     list-style: none;
+    margin-top: -4rem;
+    margin-bottom: -2rem;
+    text-align: left;
 }
 
-ul li {
-    display: inline-block;
-    align-items: center;
-    font-size: 1.5rem;
-    padding: 0.5rem;
+.login-list-element {
+    font-size: 1.5em;
+    margin-top: -0.5rem;
+    text-align: left;
+}
+
+.login-list-element-label {
+    margin-top: -1rem;
+    font-size: 1.5em;
+    text-align: left;
 }
 
 .text-bar {
-    font-size: 1.5rem;
+    background-color: rgb(255, 255, 255);
+    margin-top: 0.75rem;
+    border: 1px solid rgb(54, 158, 157);
+    height: 2rem;
+    width: 15rem;
+    border-radius: 7px;
+    font-size: 0.75em;
+    text-align: left;
+    color: rgb(0, 0, 0);
 }
 
-button {
-    font-size: 2rem;
-    border-radius: 15px;
-    width: 90%;
-    paddin: 0.5rem;
+.text-bar:hover {
+    border: 2px solid rgb(61, 121, 226);
+}
+
+#login-button {
+    margin-top: 4rem;
+    background-color: green;
+    margin-left: 4rem;
+}
+
+#goto-register-button {
+    margin-left: 4rem;
+}
+
+#login-content-section {
+    text-align: left;
+}
+
+#goto-register-section {
+    text-align: left;
+    padding-bottom: 15rem;
+}
+
+#register-paragraph {
+    text-align: left;
+    padding-left: 3rem;
+    margin-top: 5rem;
+    font-weight: 150;
+}
+
+#register-link * {
+    text-decoration: none;
+}
+
+#goto-register-button * {
+    text-decoration: none;
 }

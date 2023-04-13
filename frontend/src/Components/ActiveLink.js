@@ -6,6 +6,7 @@ export function ActiveLink(props) {
     <NavLink
       to={props.to}
       className={({ isActive }) => (isActive ? "selected" : "")}
+      style={{ textDecoration: 'none' }}
     >
       {props.children}
     </NavLink>

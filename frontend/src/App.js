@@ -7,7 +7,7 @@ import { MainSection } from './MainSection';
 function App() {
   return (
     <Router>
-      <section>
+      <section id="app-section">
         <NavBar id="navbar"/>
         <MainSection/>
       </section>

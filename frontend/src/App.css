@@ -1,9 +1,9 @@
-section {
+#app-section {
     display: inline-flex;
     width: 100%;
 }
 
-section::after {
+#app-section::after {
     content: "";
     display: table;
     clear: both;

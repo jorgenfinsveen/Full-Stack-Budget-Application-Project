@@ -11,6 +11,14 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import no.idata1002.group19.domain.entity.Budget;
 import no.idata1002.group19.domain.entity.User;
 
+/**
+ * Represents an interface for Budget Repository, that
+ * extends to CrudRepository.
+ * 
+ * @author  Group19
+ * @since   16.04.2023
+ * @version 16.04.2023
+ */
 @RepositoryRestResource
 public interface BudgetRepository extends CrudRepository<Budget, Long>{
     

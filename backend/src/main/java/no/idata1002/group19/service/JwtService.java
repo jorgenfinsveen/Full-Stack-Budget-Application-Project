@@ -10,6 +10,14 @@ import java.security.Key;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.Date;
 
+/**
+ * Represents an JSON Web Token (JWT) service that generates
+ * and validates JWT tokens.
+ * 
+ * @author  Group19
+ * @since   16.04.2023
+ * @version 16.04.2023
+ */
 @Component
 public class JwtService {
     static final long EXPIRATIONTIME = 86400000; // 1 day in ms

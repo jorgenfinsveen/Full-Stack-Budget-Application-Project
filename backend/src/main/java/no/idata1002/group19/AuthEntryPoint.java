@@ -12,6 +12,15 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+/**
+ * Represents an component that implements the AuthenticationEntryPoint
+ * interface. Contains a method to handle authenticaton and sends an HTTP
+ * unauthorized response with JSON error message.
+ * 
+ * @author  Group19
+ * @since   16.04.2023
+ * @version 16.04.2023
+ */
 @Component
 public class AuthEntryPoint implements AuthenticationEntryPoint {
     @Override

@@ -23,7 +23,15 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import no.idata1002.group19.service.UserDetailsServiceImpl;
 
-
+/**
+ * Represents security configuration class for Spring Security,
+ * the class is responsible for configuring the security settings
+ * and the components of the application.
+ * 
+ * @author  Group19
+ * @since   16.04.2023
+ * @version 16.04.2023
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {

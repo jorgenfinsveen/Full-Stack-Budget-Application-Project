@@ -16,13 +16,23 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
+/**
+ * Represents an filter class to authenticate all other
+ * incoming requests.The AuthencticationFilter class
+ * extends Spring Security's OncePerRequestFilter
+ * interface that provides doFilterInternal method where
+ * the authentication is implemented.
+ * 
+ * @author  Group19
+ * @since   16.04.2023
+ * @version 16.04.2023
+ */
 @Component
 public class AuthenticationFilter extends OncePerRequestFilter {
     @Autowired
     private JwtService jwtService;
     
-
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {

@@ -13,6 +13,15 @@ import org.springframework.stereotype.Service;
 import no.idata1002.group19.domain.entity.User;
 import no.idata1002.group19.domain.repository.UserRepository;
 
+/**
+ * Represents UserDetailsService and implements UserDetailService
+ * from Spring Security to provide user authentication and authorization
+ * services.
+ * 
+ * @author  Group19
+ * @since   16.04.2023
+ * @version 16.04.2023
+ */
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
     

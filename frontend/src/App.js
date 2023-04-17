@@ -1,8 +1,8 @@
 import React from 'react';
-import { NavBar } from "./Components/NavBar";
+import { NavBar } from "./Components/Routing/NavBar";
 import { BrowserRouter as Router } from "react-router-dom";
 import './App.css';
-import { MainSection } from './MainSection';
+import { MainSection } from './Components/MainSection/MainSection';
 
 function App() {
   return (

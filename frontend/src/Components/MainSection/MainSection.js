@@ -1,10 +1,10 @@
 import { Route, Routes } from "react-router-dom";
-import { DashBoard } from "./Pages/DashBoard/DashBoard";
-import { Budget } from "./Pages/Budget/Budget";
-import { Analytics } from "./Pages/Analytics/Analytics";
+import { DashBoard } from "../../Pages/DashBoard/DashBoard";
+import { Budget } from "../../Pages/Budget/Budget";
+import { Analytics } from "../../Pages/Analytics/Analytics";
 import './MainSection.css';
-import { Login } from "./Pages/Login/Login";
-import { Register } from "./Pages/Login/Register";
+import { Login } from "../../Pages/Login/Login";
+import { Register } from "../../Pages/Login/Register";
 
 export function MainSection() {
   return (

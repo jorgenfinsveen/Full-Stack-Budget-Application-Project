@@ -157,6 +157,22 @@ public class User {
     }
 
     /**
+     * Return budget
+     * @return budget
+     */
+    public Budget getBudget() {
+        return budget;
+    }
+
+    /**
+     * Setts budget
+     * @param budget budget
+     */
+    public void setBudget(Budget budget) {
+        this.budget = budget;
+    }
+
+    /**
      * Checks of the user is valid.
      *
      * @return boolean statement. True if valid, false if not.

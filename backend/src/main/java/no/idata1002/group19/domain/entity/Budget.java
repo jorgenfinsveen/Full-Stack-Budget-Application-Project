@@ -120,7 +120,23 @@ public class Budget {
         }
     }
 
+    /**
+     * Returns transactions
+     * @return transactions
+     */
+    public Set<Transaction> getTransactions() {
+        return transactions;
+    }
+
+    /**
+     * Setts transactions
+     * @param transactions Set of transactions
+     */
+    public void setTransactions(Set<Transaction> transactions) {
+        this.transactions = transactions;
+    }
+
     public boolean isValid() {
-        return !(this.startDate == null) && !(this.endDate == null);    //&& !(transactions == null);
+        return !(this.startDate == null) && !(this.endDate == null);
     }
 }

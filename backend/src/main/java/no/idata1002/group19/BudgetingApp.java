@@ -75,13 +75,6 @@ public class BudgetingApp implements CommandLineRunner {
 
 
 	private void populateUserDb() {
-		User user1 = new User("username_1", "password_1", "user1");
-		User user2 = new User("username_2", "password_2", "user2");
-		User user3 = new User("username_3", "password_3", "user3");
 
-		userRepository.deleteAll();
-		userRepository.save(user1);
-		userRepository.save(user2);
-		userRepository.save(user3);
 	}
 }

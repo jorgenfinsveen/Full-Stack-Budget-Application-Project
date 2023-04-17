@@ -37,10 +37,6 @@ public class Transaction {
     @Column(name = "date", nullable = false)
     private LocalDate date;
 
-    @ManyToOne
-    @JoinColumn(name = "budget_bid")
-    private Budget budget;
-
     private static final Logger LOGGER = Logger.getLogger(Transaction.class.getName());
     private static final String ILLEGAL_ARGUMENT_EXCEPTION_WARNING = "Caught Illegal Argument Exception: ";
 

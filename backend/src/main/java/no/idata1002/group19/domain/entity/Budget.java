@@ -3,7 +3,6 @@ package no.idata1002.group19.domain.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Logger;
 
@@ -31,14 +30,13 @@ public class Budget {
     @Column(name = "endDate", nullable = false)
     private LocalDate endDate;
 
-    @OneToOne
-    @JoinColumn(name = "user_uid")
-    private User user;
-
-    @NotNull
-    @Column(nullable = false)
-    @OneToMany()
-    private Set<Transaction> transactions = new HashSet<>();
+    @OneToMany
+    @JoinTable(
+            name = "budget_transaction",
+            joinColumns = @JoinColumn(name = "budget_id"),
+            inverseJoinColumns = @JoinColumn(name = "transaction_id")
+    )
+    private Set<Transaction> transactions;
 
     private static final Logger LOGGER = Logger.getLogger(Budget.class.getName());
 
@@ -123,6 +121,6 @@ public class Budget {
     }
 
     public boolean isValid() {
-        return !(this.startDate == null) && !(this.endDate == null) && !(transactions == null);
+        return !(this.startDate == null) && !(this.endDate == null);    //&& !(transactions == null);
     }
 }

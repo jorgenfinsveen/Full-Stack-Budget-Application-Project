@@ -2,10 +2,6 @@ package no.idata1002.group19.domain.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.Set;
 import java.util.logging.Logger;
 
 /**
@@ -32,7 +28,12 @@ public class User {
     @Column(name = "pass", nullable = false)
     private String pass;
 
-    @OneToOne(mappedBy = "user")
+    @NotNull
+    @Column(name = "role", nullable = false)
+    private String role;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "budget_id", referencedColumnName = "bid")
     private Budget budget;
 
     private static final Logger LOGGER = Logger.getLogger(User.class.getName());
@@ -44,10 +45,11 @@ public class User {
      * @param userName the name of the user.
      * @param pass the password for the user.
      */
-    public User(String userName, String pass) {
+    public User(String userName, String pass, String role) {
         try {
             this.userName = stringChecker(userName, "userName");
             this.pass = stringChecker(pass, "pass");
+            this.role = stringChecker(role, "role");
         }
         catch (IllegalArgumentException illegalArgumentException) {
             LOGGER.warning(ILLEGAL_ARGUMENT_EXCEPTION_WARNING + illegalArgumentException.getMessage());
@@ -127,6 +129,27 @@ public class User {
     public void setPass(String pass) {
         try {
             this.pass = stringChecker(pass, "pass");
+        }
+        catch (IllegalArgumentException illegalArgumentException) {
+            LOGGER.warning(ILLEGAL_ARGUMENT_EXCEPTION_WARNING + illegalArgumentException.getMessage());
+        }
+    }
+
+    /**
+     * Return role
+     * @return role
+     */
+    public String getRole() {
+        return this.role;
+    }
+
+    /**
+     * Setts the role of the user
+     * @param role the role of the user.
+     */
+    public void setRole(String role) {
+        try{
+            this.role = stringChecker(role, "role");
         }
         catch (IllegalArgumentException illegalArgumentException) {
             LOGGER.warning(ILLEGAL_ARGUMENT_EXCEPTION_WARNING + illegalArgumentException.getMessage());

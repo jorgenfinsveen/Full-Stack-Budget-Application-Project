@@ -1,59 +1,143 @@
 package no.idata1002.group19.domain.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
-@Entity(name = "\"user\"")
-@Table(name = "\"user\"")
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.Set;
+import java.util.logging.Logger;
+
+/**
+ * Represent user entity.
+ *
+ * @author Ole Kristian
+ * @version 1.0
+ */
+@Entity
+@Table(name = "user")
 public class User {
-    
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "uid", nullable = false, updatable = false)
+    @GeneratedValue
+    @Column(name = "uid")
     private long uid;
 
-    @Column(name = "username", nullable = false, unique = true)
-    private String username;
+    @NotNull
+    @Column(name = "username", nullable = false)
+    private String userName;
 
-    @Column(name = "password", nullable = false)
-    private String password;
+    @NotNull
+    @Column(name = "pass", nullable = false)
+    private String pass;
 
+    @OneToOne(mappedBy = "user")
+    private Budget budget;
 
-    public User() {}
+    private static final Logger LOGGER = Logger.getLogger(User.class.getName());
+    private static final String ILLEGAL_ARGUMENT_EXCEPTION_WARNING = "Caught Illegal Argument Exception: ";
 
-
-    public User(String username, String password) {
-        super();
-        this.username = username;
-        this.password = password;
+    /**
+     * Default contractor for user.
+     *
+     * @param userName the name of the user.
+     * @param pass the password for the user.
+     */
+    public User(String userName, String pass) {
+        try {
+            this.userName = stringChecker(userName, "userName");
+            this.pass = stringChecker(pass, "pass");
+        }
+        catch (IllegalArgumentException illegalArgumentException) {
+            LOGGER.warning(ILLEGAL_ARGUMENT_EXCEPTION_WARNING + illegalArgumentException.getMessage());
+        }
     }
 
+    /**
+     * Checks if the string is valid
+     *
+     * @param string the string you want to check.
+     * @param prefiks name of the string.
+     * @return if the string is correct it returns the string
+     */
+    private String stringChecker(String string, String prefiks) {
+        if(string.isEmpty() || string == null) {
+            throw new IllegalArgumentException("The string " + "'" + prefiks + "'" + " cant be empty or null");
+        }
+        return string;
+    }
 
+    /**
+     * Empty constructor that is needed for JPA
+     */
+    public User() {
+
+    }
+
+    /**
+     * Returns the user id.
+     * @return uid
+     */
     public Long getUid() {
         return uid;
     }
 
-    public void setUid(long uid) {
+    /**
+     * Returns user name
+     * @return userName
+     */
+    public String getUsername() {
+        return userName;
+    }
+
+    /**
+     * Returns password.
+     * @return pass.
+     */
+    public String getPass() {
+        return pass;
+    }
+
+    /**
+     * Setts the user id
+     * @param uid the id of the user that you want.
+     */
+    public void setUid(Long uid) {
         this.uid = uid;
     }
 
-    public String getUsername() {
-        return username;
+    /**
+     * Setts the username.
+     * @param userName the name of the user that you want.
+     */
+    public void setUserName(String userName) {
+        try {
+            this.userName = stringChecker(userName, "userName");
+        }
+        catch (IllegalArgumentException illegalArgumentException) {
+            LOGGER.warning(ILLEGAL_ARGUMENT_EXCEPTION_WARNING + illegalArgumentException.getMessage());
+        }
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    /**
+     * Setts the password for the user.
+     * @param pass the password of the user that you want.
+     */
+    public void setPass(String pass) {
+        try {
+            this.pass = stringChecker(pass, "pass");
+        }
+        catch (IllegalArgumentException illegalArgumentException) {
+            LOGGER.warning(ILLEGAL_ARGUMENT_EXCEPTION_WARNING + illegalArgumentException.getMessage());
+        }
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    /**
+     * Checks of the user is valid.
+     *
+     * @return boolean statement. True if valid, false if not.
+     */
+    public boolean isValid() {
+        return !"".equals(this.userName) && !"".equals(this.pass);
     }
 }

@@ -1,110 +1,127 @@
 package no.idata1002.group19.domain.entity;
 
-import java.time.LocalDateTime;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.logging.Logger;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-
-@Entity(name = "budget")
+/**
+ * This class represent the budget entity.
+ *
+ * @author Ole Kristian
+ * @version 1.0
+ */
+@Entity
+@Table(name = "budget")
 public class Budget {
-    
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     @Column(name = "bid")
     private long bid;
 
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="\"user\"")
+    @NotNull
+    @Column(name = "startDate", nullable = false)
+    private LocalDate startDate;
+
+    @NotNull
+    @Column(name = "endDate", nullable = false)
+    private LocalDate endDate;
+
+    @OneToOne
+    @JoinColumn(name = "user_uid")
     private User user;
 
-    @Column(name = "start_date")
-    private LocalDateTime startdate;
+    @NotNull
+    @Column(nullable = false)
+    @OneToMany()
+    private Set<Transaction> transactions = new HashSet<>();
 
-    @Column(name = "end_date")
-    private LocalDateTime enddate;
+    private static final Logger LOGGER = Logger.getLogger(Budget.class.getName());
 
-    @Column(name = "budget_limit")
-    private double limit;
-
-    @Column(name = "budget_balance")
-    private double balance;
-
-
-    public Budget() {}
-
-
-    public Budget(User user, LocalDateTime startdate, LocalDateTime enddate, double limit, double balance) {
-        super();
-        this.user = user;
-        this.startdate = startdate;
-        this.enddate = enddate;
-        this.limit = limit;
-        this.balance = balance;
+    /**
+     * Default constructor for budget
+     * @param startDate start date of the budget. Format (yyyy-MM-dd)
+     * @param endDate end date of the budget. Format (yyyy-MM-dd)
+     */
+    public Budget(LocalDate startDate, LocalDate endDate) {
+        try {
+            this.startDate = startDate;
+            this.endDate = endDate;
+        }
+        catch (IllegalArgumentException illegalArgumentException) {
+            LOGGER.warning(illegalArgumentException.getMessage());
+        }
     }
 
+    /**
+     * Empty constructor that is needed for JPA
+     */
+    public Budget() {
 
+    }
+
+    /**
+     * Returns the id of budget.
+     * @return bid.
+     */
     public long getBid() {
         return bid;
     }
 
+    /**
+     * Returns the start date of the budget
+     * @return startDate.
+     */
+    public LocalDate getStartDate() {
+        return startDate;
+    }
 
+    /**
+     * Returns the end date of the budget.
+     * @return endDate.
+     */
+    public LocalDate getEndDate() {
+        return endDate;
+    }
+
+    /**
+     * Setts the id of budget
+     * @param bid the bid that you want.
+     */
     public void setBid(long bid) {
         this.bid = bid;
     }
 
-
-    public User getUser() {
-        return user;
+    /**
+     * Setts the start date of the budget.
+     * @param startDate the start date you want. Format (yyyy-MM-dd).
+     */
+    public void setStartDate(LocalDate startDate) {
+        try {
+            this.startDate = startDate;
+        }
+        catch (IllegalArgumentException illegalArgumentException) {
+            LOGGER.warning(illegalArgumentException.getMessage());
+        }
     }
 
-
-    public void setUser(User user) {
-        this.user = user;
+    /**
+     * Setts the end date of the budget.
+     * @param endDate the end date you want. Format (yyyy-MM-dd).
+     */
+    public void setEndDate(LocalDate endDate) {
+        try {
+            this.endDate = endDate;
+        }
+        catch (IllegalArgumentException illegalArgumentException) {
+            LOGGER.warning(illegalArgumentException.getMessage());
+        }
     }
 
-
-    public LocalDateTime getStartdate() {
-        return startdate;
-    }
-
-
-    public void setStartdate(LocalDateTime startdate) {
-        this.startdate = startdate;
-    }
-
-
-    public LocalDateTime getEnddate() {
-        return enddate;
-    }
-
-
-    public void setEnddate(LocalDateTime enddate) {
-        this.enddate = enddate;
-    }
-
-
-    public double getLimit() {
-        return limit;
-    }
-
-
-    public void setLimit(double limit) {
-        this.limit = limit;
-    }
-
-
-    public double getBalance() {
-        return balance;
-    }
-
-
-    public void setBalance(double balance) {
-        this.balance = balance;
+    public boolean isValid() {
+        return !(this.startDate == null) && !(this.endDate == null) && !(transactions == null);
     }
 }

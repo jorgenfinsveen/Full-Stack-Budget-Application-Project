@@ -10,8 +10,9 @@ import java.util.logging.Logger;
 /**
  * This class represent the budget entity.
  *
- * @author Ole Kristian
- * @version 1.0
+ * @author  Group19
+ * @since   16.04.2023
+ * @version 16.04.2023
  */
 @Entity
 @Table(name = "budget")

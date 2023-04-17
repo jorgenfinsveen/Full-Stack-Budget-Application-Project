@@ -8,8 +8,9 @@ import java.util.logging.Logger;
 /**
  * This class represent Transaction entity.
  *
- * @author Ole kristain.
- * @version 1.0
+ * @author  Group19
+ * @since   16.04.2023
+ * @version 16.04.2023
  */
 @Entity
 @Table(name = "transaction")
@@ -107,7 +108,7 @@ public class Transaction {
     }
 
     /**
-     * Returns the vale of the transaction.
+     * Returns the value of the transaction.
      * @return value.
      */
     public int getValue() {
@@ -147,7 +148,7 @@ public class Transaction {
     }
 
     /**
-     * Setts the vale of the transaction.
+     * Setts the value of the transaction.
      * @param value the vale you want for transaction.
      */
     public void setValue(int value) {

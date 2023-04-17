@@ -18,7 +18,7 @@ import java.util.logging.Logger;
 public class Budget {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "bid")
     private long bid;
 

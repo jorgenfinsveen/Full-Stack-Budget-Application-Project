@@ -16,12 +16,12 @@ import java.util.logging.Logger;
 public class User {
 
     @Id
-    @GeneratedValue
-    @Column(name = "uid")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable=false, updatable=false)
     private long uid;
 
     @NotNull
-    @Column(name = "username", nullable = false)
+    @Column(name = "username", nullable = false, unique = true)
     private String userName;
 
     @NotNull

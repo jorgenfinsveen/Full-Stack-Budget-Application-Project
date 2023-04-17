@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 public class Transaction {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "tid")
     private long tid;
 

@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 public class LoginController {
-    
+
     @Autowired
     private JwtService jwtService;
 
@@ -31,8 +31,8 @@ public class LoginController {
 	public ResponseEntity<?> getToken(@RequestBody User user) {
 		UsernamePasswordAuthenticationToken creds =
 				new UsernamePasswordAuthenticationToken(
-						user.getUsername(), 
-						user.getPass());	
+						user.getUsername(),
+						user.getPass());
 
 		Authentication auth = authenticationManager.authenticate(creds);
 

@@ -4,7 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Set;
-import java.util.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * This class represent the budget entity.
@@ -38,7 +39,7 @@ public class Budget {
     )
     private Set<Transaction> transactions;
 
-    private static final Logger LOGGER = Logger.getLogger(Budget.class.getName());
+    private static final Logger LOGGER = LogManager.getLogger(Budget.class);
 
     /**
      * Default constructor for budget
@@ -47,11 +48,14 @@ public class Budget {
      */
     public Budget(LocalDate startDate, LocalDate endDate) {
         try {
+            if (startDate == null || endDate == null || endDate.isBefore(startDate)) {
+                throw new IllegalArgumentException("Invalid input: start date or end date is null, or end date is before start date");
+            }
             this.startDate = startDate;
             this.endDate = endDate;
         }
         catch (IllegalArgumentException illegalArgumentException) {
-            LOGGER.warning(illegalArgumentException.getMessage());
+            LOGGER.warn(illegalArgumentException.getMessage());
         }
     }
 
@@ -103,7 +107,7 @@ public class Budget {
             this.startDate = startDate;
         }
         catch (IllegalArgumentException illegalArgumentException) {
-            LOGGER.warning(illegalArgumentException.getMessage());
+            LOGGER.warn(illegalArgumentException.getMessage());
         }
     }
 
@@ -116,7 +120,7 @@ public class Budget {
             this.endDate = endDate;
         }
         catch (IllegalArgumentException illegalArgumentException) {
-            LOGGER.warning(illegalArgumentException.getMessage());
+            LOGGER.warn(illegalArgumentException.getMessage());
         }
     }
 
@@ -136,6 +140,10 @@ public class Budget {
         this.transactions = transactions;
     }
 
+    /**
+     * Checks if the budget is valid
+     * @return true if valid false if n
+     */
     public boolean isValid() {
         return !(this.startDate == null) && !(this.endDate == null);
     }

@@ -39,8 +39,9 @@ public class Transaction {
     @Column(name = "date", nullable = false)
     private LocalDate date;
 
-    private static final Logger LOGGER = LogManager.getLogger(Transaction.class);
-    private static final String ILLEGAL_ARGUMENT_EXCEPTION_WARNING = "Caught Illegal Argument Exception: ";
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "budget_id", referencedColumnName = "bid")
+    private Budget budget;
 
     /**
      * Default constructor for Transaction.
@@ -52,18 +53,16 @@ public class Transaction {
      */
     public Transaction(String tname, int value, String description, LocalDate date) {
         super();
-        this.tname = tname;
-        this.value = value;
-        this.description = description;
+        this.tname = stringChecker(tname, "tname");
+        this.value = numberChecker(value, "value");
+        this.description = stringChecker(description, "description");
         this.date = date;
     }
 
     /**
      * Empty constructor that is needed for JPA
      */
-    public Transaction() {
-
-    }
+    public Transaction() {}
 
     /**
      * Checks if the string is valid

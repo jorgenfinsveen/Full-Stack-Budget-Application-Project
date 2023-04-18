@@ -18,7 +18,7 @@ public class BudgetTest {
     void testConstructorValidInputs() {
         LocalDate startDate = LocalDate.of(2023, 4, 18);
         LocalDate endDate = LocalDate.of(2023, 6, 18);
-        Budget budget = new Budget(startDate, endDate);
+        Budget budget = new Budget(startDate, endDate, 0);
         assertEquals(budget.getStartDate().toString(), "2023-04-18");
     }
 
@@ -28,7 +28,7 @@ public class BudgetTest {
         LogCaptor logCaptor = LogCaptor.forClass(Budget.class);
         LocalDate localDate1 = LocalDate.of(2023,4,18);
         LocalDate localDate2 = LocalDate.of(2023,4,16);
-        Budget budget = new Budget(localDate1, localDate2);
+        Budget budget = new Budget(localDate1, localDate2, 0);
         assertThat(logCaptor.getWarnLogs().contains(expectedWarningMasage));
     }
 
@@ -36,7 +36,7 @@ public class BudgetTest {
     void testIsValidPositive() {
         LocalDate startDate = LocalDate.of(2023, 4, 18);
         LocalDate endDate = LocalDate.of(2023, 4, 19);
-        Budget budget = new Budget(startDate, endDate);
+        Budget budget = new Budget(startDate, endDate, 0);
         assertTrue(budget.isValid());
     }
 
@@ -44,7 +44,7 @@ public class BudgetTest {
     void testIsValidNegative() {
         LocalDate startDate = LocalDate.of(2023, 4, 18);
         LocalDate endDate = null;
-        Budget budget = new Budget(startDate, endDate);
+        Budget budget = new Budget(startDate, endDate, 0);
         assertFalse(budget.isValid());
     }
 

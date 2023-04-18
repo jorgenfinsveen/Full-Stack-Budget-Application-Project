@@ -17,8 +17,8 @@ import java.util.List;
  * @since   16.04.2023
  * @version 16.04.2023
  */
-@RestController
-@RequestMapping("/api/budget")
+//@RestController
+//@RequestMapping("/api/budget")
 public class BudgetController {
 
     @Autowired

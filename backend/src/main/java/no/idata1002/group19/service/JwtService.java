@@ -20,39 +20,40 @@ import java.util.Date;
  */
 @Component
 public class JwtService {
+
     static final long EXPIRATIONTIME = 86400000; // 1 day in ms
+
 	static final String PREFIX = "Bearer";
+
 	// Generate secret key. Only for the demonstration
 	// You should read it from the application configuration
 	static final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
+	
 	// Generate JWT token
 	public String getToken(String username) {
-		String token = Jwts.builder()
+		return Jwts.builder()
 			  .setSubject(username)
 			  .setExpiration(new Date(System.currentTimeMillis() + EXPIRATIONTIME))
 			  .signWith(key)
 			  .compact();
-		return token;
-  }
+  	}
+
 
 	// Get a token from request Authorization header,
     // parse a token and get username
 	public String getAuthUser(HttpServletRequest request) {
-		String token = request.getHeader(HttpHeaders.AUTHORIZATION);
+        String token = request.getHeader(HttpHeaders.AUTHORIZATION);
+        String user = null;
 
-		if (token != null) {
-			String user = Jwts.parserBuilder()
-					.setSigningKey(key)
-					.build()
-					.parseClaimsJws(token.replace(PREFIX, ""))
-					.getBody()
-					.getSubject();
-
-			if (user != null)
-				return user;
-		}
-
-		return null;
+        if (token != null) {
+            user = Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token.replace(PREFIX, ""))
+                .getBody()
+                .getSubject();
+        }
+        return user;
 	}
 }

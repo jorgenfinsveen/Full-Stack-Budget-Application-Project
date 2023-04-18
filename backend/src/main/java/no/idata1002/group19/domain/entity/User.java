@@ -1,9 +1,18 @@
 package no.idata1002.group19.domain.entity;
 
-import jakarta.persistence.*;
+import java.time.LocalDate;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 /**
  * Represent user entity.
@@ -18,23 +27,20 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable=false, updatable=false)
-    private long uid;
+    @Column(nullable = false, updatable = false)
+    private Long id;
 
-    @NotNull
     @Column(name = "username", nullable = false, unique = true)
-    private String userName;
+    private String username;
 
-    @NotNull
-    @Column(name = "pass", nullable = false)
-    private String pass;
+    @Column(name = "password", nullable = false)
+    private String password;
 
-    @NotNull
     @Column(name = "role", nullable = false)
     private String role;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "budget_id", referencedColumnName = "bid")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "bid")
     private Budget budget;
 
 
@@ -44,11 +50,12 @@ public class User {
      * @param userName the name of the user.
      * @param pass the password for the user.
      */
-    public User(String userName, String pass, String role) {
+    public User(String username, String password, String role, Budget budget) {
         super();
-        this.userName = stringChecker(userName, "userName");
-        this.pass = stringChecker(pass, "pass");
+        this.username = stringChecker(username, "username");
+        this.password = stringChecker(password, "password");
         this.role = stringChecker(role, "role");
+        this.budget = budget;
     }
 
     /**
@@ -74,8 +81,8 @@ public class User {
      * Returns the user id.
      * @return uid
      */
-    public Long getUid() {
-        return uid;
+    public Long getId() {
+        return id;
     }
 
     /**
@@ -83,39 +90,39 @@ public class User {
      * @return userName
      */
     public String getUsername() {
-        return userName;
+        return username;
     }
 
     /**
      * Returns password.
      * @return pass.
      */
-    public String getPass() {
-        return pass;
+    public String getPassword() {
+        return password;
     }
 
     /**
      * Setts the user id
      * @param uid the id of the user that you want.
      */
-    public void setUid(Long uid) {
-        this.uid = uid;
+    public void setId(Long uid) {
+        this.id = uid;
     }
 
     /**
      * Setts the username.
      * @param userName the name of the user that you want.
      */
-    public void setUserName(String userName) {
-        this.userName = stringChecker(userName, "userName");
+    public void setUsername(String username) {
+        this.username = stringChecker(username, "username");
     }
 
     /**
      * Setts the password for the user.
      * @param pass the password of the user that you want.
      */
-    public void setPass(String pass) {
-        this.pass = stringChecker(pass, "pass");
+    public void setPassword(String password) {
+        this.password = stringChecker(password, "pass");
     }
 
     /**
@@ -156,8 +163,8 @@ public class User {
      * @return boolean statement. True if valid, false if not.
      */
     public boolean isValid() {
-        return this.userName != null && !this.userName.trim().isEmpty() &&
-                this.pass != null && !this.pass.trim().isEmpty() &&
+        return this.username != null && !this.username.trim().isEmpty() &&
+                this.password != null && !this.password.trim().isEmpty() &&
                 this.role != null && !this.role.trim().isEmpty();
     }
 }

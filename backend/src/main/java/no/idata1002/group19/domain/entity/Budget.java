@@ -29,7 +29,7 @@ import jakarta.validation.constraints.NotNull;
 public class Budget {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "bid")
     private long bid;
 

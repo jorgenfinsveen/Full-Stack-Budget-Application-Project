@@ -15,8 +15,8 @@ import no.idata1002.group19.domain.entity.User;
  * @since   16.04.2023
  * @version 16.04.2023
  */
-@RepositoryRestResource(exported = false)
+@RepositoryRestResource(exported = true)
 public interface UserRepository extends CrudRepository<User, Long>{
 
-    Optional<User> findByUserName(String userName);
+    Optional<User> findByUsername(String username);
 }

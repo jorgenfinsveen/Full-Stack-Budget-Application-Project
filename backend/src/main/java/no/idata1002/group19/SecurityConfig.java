@@ -1,8 +1,9 @@
 package no.idata1002.group19;
 
 import java.util.Arrays;
-
 import org.springframework.beans.factory.annotation.Autowired;
+
+import static org.springframework.security.config.Customizer.withDefaults;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -83,12 +84,7 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-/*
-        http.csrf().disable().cors().and()
-            .authorizeHttpRequests().anyRequest().permitAll();
-*/
-
-        http.csrf()
+        return http.csrf()
             .disable()
             .cors()
             .and()
@@ -104,10 +100,13 @@ public class SecurityConfig {
             .exceptionHandling()
             .authenticationEntryPoint(exceptionHandler)
             .and()
-            .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class);
+            .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
+            .build();
 
-
-        return http.build();
+        /*
+        return http.csrf().disable().cors().and()
+            .authorizeHttpRequests().anyRequest().permitAll().build();
+        */
     }
 
     @Bean

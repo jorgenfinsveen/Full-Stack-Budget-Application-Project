@@ -8,20 +8,25 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.time.LocalDate;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class UserTest {
 
+    Budget budget = new Budget(LocalDate.now(), LocalDate.now(), 10000);
+
     @Test
     void testConstructorValidInput() {
         String username = "user";
         String pass = "pass";
         String role = "user";
-        User user = new User(username,pass,role);
+        User user = new User(username,pass,role, budget);
         assertEquals(user.getUsername(), "user");
-        assertEquals(user.getPass(), "pass");
+        assertEquals(user.getPassword(), "pass");
         assertEquals(user.getRole(), "user");
     }
 
@@ -29,7 +34,7 @@ public class UserTest {
     void testConstructorInvalidInputUsernameNull() {
         String expectedWarningMassageForUserName = "Caught Illegal Argument Exception: The string userName cant be empty or null";
         LogCaptor logCaptor = LogCaptor.forClass(User.class);
-        User user = new User(null, "null", "null");
+        User user = new User(null, "null", "null", budget);
         assertThat(logCaptor.getWarnLogs().contains(expectedWarningMassageForUserName));
     }
 
@@ -37,7 +42,7 @@ public class UserTest {
     void testConstructorInvalidInputUsernameEmpty() {
         String expectedWarningMassageForUserName = "Caught Illegal Argument Exception: The string userName cant be empty or null";
         LogCaptor logCaptor = LogCaptor.forClass(User.class);
-        User user = new User("", "null", "null");
+        User user = new User("", "null", "null", budget);
         assertThat(logCaptor.getWarnLogs().contains(expectedWarningMassageForUserName));
     }
 
@@ -45,7 +50,7 @@ public class UserTest {
     void testConstructorInvalidInputPassNull() {
         String ectedWarningMassageForPass = "Caught Illegal Argument Exception: The string pass cant be empty or null";
         LogCaptor logCaptor = LogCaptor.forClass(User.class);
-        User user = new User("null", null, "null");
+        User user = new User("null", null, "null", budget);
         assertThat(logCaptor.getWarnLogs().contains(ectedWarningMassageForPass));
     }
 
@@ -53,7 +58,7 @@ public class UserTest {
     void testConstructorInvalidInputPassempty() {
         String ectedWarningMassageForPass = "Caught Illegal Argument Exception: The string pass cant be empty or null";
         LogCaptor logCaptor = LogCaptor.forClass(User.class);
-        User user = new User("", null, "null");
+        User user = new User("", null, "null", budget);
         assertThat(logCaptor.getWarnLogs().contains(ectedWarningMassageForPass));
     }
 
@@ -61,7 +66,7 @@ public class UserTest {
     void testConstructorInvalidInputRoleNull() {
         String ectedWarningMassageForRole = "Caught Illegal Argument Exception: The string role cant be empty or null";
         LogCaptor logCaptor = LogCaptor.forClass(User.class);
-        User user = new User("null", "null", null);
+        User user = new User("null", "null", null, budget);
         assertThat(logCaptor.getWarnLogs().contains(ectedWarningMassageForRole));
     }
 
@@ -69,19 +74,19 @@ public class UserTest {
     void testConstructorInvalidInputRoleEmpty() {
         String ectedWarningMassageForRole = "Caught Illegal Argument Exception: The string role cant be empty or null";
         LogCaptor logCaptor = LogCaptor.forClass(User.class);
-        User user = new User("null", "null", "");
+        User user = new User("null", "null", "", budget);
         assertThat(logCaptor.getWarnLogs().contains(ectedWarningMassageForRole));
     }
 
     @Test
     void testIsValidPositive() {
-        User user = new User("user", "password", "admin");
+        User user = new User("user", "password", "admin", budget);
         assertTrue(user.isValid());
     }
 
     @Test
     void testIsValidNegative() {
-        User user = new User("", "", "");
+        User user = new User("", "", "", budget);
         assertFalse(user.isValid());
     }
 

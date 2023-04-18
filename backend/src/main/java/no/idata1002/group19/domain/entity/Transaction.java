@@ -41,15 +41,11 @@ public class Transaction {
     private static final String ILLEGAL_ARGUMENT_EXCEPTION_WARNING = "Caught Illegal Argument Exception: ";
 
     public Transaction(String tname, int value, String description, LocalDate date) {
-        try {
-            this.tname = stringChecker(tname, "tname");
-            this.value = numberChecker(value, "value");
-            this.description = stringChecker(description, "description");
-            this.date = date;
-        }
-        catch (IllegalArgumentException illegalArgumentException) {
-            LOGGER.warning(ILLEGAL_ARGUMENT_EXCEPTION_WARNING + illegalArgumentException.getMessage());
-        }
+        super();
+        this.tname = tname;
+        this.value = value;
+        this.description = description;
+        this.date = date;
     }
 
     /**

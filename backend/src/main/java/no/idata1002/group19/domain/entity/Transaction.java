@@ -2,8 +2,10 @@ package no.idata1002.group19.domain.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.time.LocalDate;
-import java.util.logging.Logger;
 
 /**
  * This class represent Transaction entity.
@@ -37,9 +39,17 @@ public class Transaction {
     @Column(name = "date", nullable = false)
     private LocalDate date;
 
-    private static final Logger LOGGER = Logger.getLogger(Transaction.class.getName());
+    private static final Logger LOGGER = LogManager.getLogger(Transaction.class);
     private static final String ILLEGAL_ARGUMENT_EXCEPTION_WARNING = "Caught Illegal Argument Exception: ";
 
+    /**
+     * Default constructor for Transaction.
+     *
+     * @param tname the name of the transaction.
+     * @param value the value of the transaction.
+     * @param description description of the transaction.
+     * @param date the date of the transaction.
+     */
     public Transaction(String tname, int value, String description, LocalDate date) {
         super();
         this.tname = tname;
@@ -63,7 +73,7 @@ public class Transaction {
      * @return if the string is correct it returns the string
      */
     private String stringChecker(String string, String prefiks) {
-        if(string.isEmpty() || string == null) {
+        if(string == null || string.trim().isEmpty()) {
             throw new IllegalArgumentException("The string " + "'" + prefiks + "'" + " cant be empty or null");
         }
         return string;
@@ -168,6 +178,8 @@ public class Transaction {
      * @return boolean statement. True if valid, false if not.
      */
     public boolean isValid() {
-        return !"".equals(this.tname) && this.value >= 0 && !"".equals(this.description);
+        return this.tname != null && !this.tname.trim().isEmpty() && this.value >= 0
+                && this.description != null && !this.tname.trim().isEmpty()
+                && this.date != null;
     }
 }

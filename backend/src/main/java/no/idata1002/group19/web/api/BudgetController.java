@@ -1,13 +1,11 @@
 package no.idata1002.group19.web.api;
 
-import no.idata1002.group19.domain.entity.Transaction;
 import no.idata1002.group19.service.BudgetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import no.idata1002.group19.domain.entity.Budget;
-import no.idata1002.group19.domain.repository.BudgetRepository;
 
 import java.util.List;
 

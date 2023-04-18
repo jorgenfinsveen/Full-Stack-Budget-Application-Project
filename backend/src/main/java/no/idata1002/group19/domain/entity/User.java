@@ -2,7 +2,8 @@ package no.idata1002.group19.domain.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import java.util.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Represent user entity.
@@ -36,8 +37,6 @@ public class User {
     @JoinColumn(name = "budget_id", referencedColumnName = "bid")
     private Budget budget;
 
-    private static final Logger LOGGER = Logger.getLogger(User.class.getName());
-    private static final String ILLEGAL_ARGUMENT_EXCEPTION_WARNING = "Caught Illegal Argument Exception: ";
 
     /**
      * Default contractor for user.
@@ -46,14 +45,10 @@ public class User {
      * @param pass the password for the user.
      */
     public User(String userName, String pass, String role) {
-        try {
-            this.userName = stringChecker(userName, "userName");
-            this.pass = stringChecker(pass, "pass");
-            this.role = stringChecker(role, "role");
-        }
-        catch (IllegalArgumentException illegalArgumentException) {
-            LOGGER.warning(ILLEGAL_ARGUMENT_EXCEPTION_WARNING + illegalArgumentException.getMessage());
-        }
+        super();
+        this.userName = stringChecker(userName, "userName");
+        this.pass = stringChecker(pass, "pass");
+        this.role = stringChecker(role, "role");
     }
 
     /**
@@ -64,7 +59,7 @@ public class User {
      * @return if the string is correct it returns the string
      */
     private String stringChecker(String string, String prefiks) {
-        if(string.isEmpty() || string == null) {
+        if (string.isEmpty()) {
             throw new IllegalArgumentException("The string " + "'" + prefiks + "'" + " cant be empty or null");
         }
         return string;
@@ -73,9 +68,7 @@ public class User {
     /**
      * Empty constructor that is needed for JPA
      */
-    public User() {
-
-    }
+    public User() {}
 
     /**
      * Returns the user id.
@@ -114,12 +107,7 @@ public class User {
      * @param userName the name of the user that you want.
      */
     public void setUserName(String userName) {
-        try {
-            this.userName = stringChecker(userName, "userName");
-        }
-        catch (IllegalArgumentException illegalArgumentException) {
-            LOGGER.warning(ILLEGAL_ARGUMENT_EXCEPTION_WARNING + illegalArgumentException.getMessage());
-        }
+        this.userName = stringChecker(userName, "userName");
     }
 
     /**
@@ -127,12 +115,7 @@ public class User {
      * @param pass the password of the user that you want.
      */
     public void setPass(String pass) {
-        try {
-            this.pass = stringChecker(pass, "pass");
-        }
-        catch (IllegalArgumentException illegalArgumentException) {
-            LOGGER.warning(ILLEGAL_ARGUMENT_EXCEPTION_WARNING + illegalArgumentException.getMessage());
-        }
+        this.pass = stringChecker(pass, "pass");
     }
 
     /**
@@ -148,12 +131,7 @@ public class User {
      * @param role the role of the user.
      */
     public void setRole(String role) {
-        try{
-            this.role = stringChecker(role, "role");
-        }
-        catch (IllegalArgumentException illegalArgumentException) {
-            LOGGER.warning(ILLEGAL_ARGUMENT_EXCEPTION_WARNING + illegalArgumentException.getMessage());
-        }
+        this.role = stringChecker(role, "role");
     }
 
     /**
@@ -178,6 +156,8 @@ public class User {
      * @return boolean statement. True if valid, false if not.
      */
     public boolean isValid() {
-        return !"".equals(this.userName) && !"".equals(this.pass);
+        return this.userName != null && !this.userName.trim().isEmpty() &&
+                this.pass != null && !this.pass.trim().isEmpty() &&
+                this.role != null && !this.role.trim().isEmpty();
     }
 }

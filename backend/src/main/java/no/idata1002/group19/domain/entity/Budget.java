@@ -1,17 +1,29 @@
 package no.idata1002.group19.domain.entity;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.util.Set;
 import java.util.logging.Logger;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
+
 /**
- * This class represent the budget entity.
+ * Database entitytype representation of a budget.
+ * 
+ * <p>Each user has a budget assigned to themselves,
+ * and the budget holds data regarding the period
+ * which the budget is supposed to be active, as well
+ * as a upper boundary for how much the user wants to
+ * spend. A budget has a one-to-many relationship with 
+ * the transaction entity-type.
  *
- * @author  Group19
+ * @author  Group 19
  * @since   16.04.2023
- * @version 16.04.2023
+ * @version 17.04.2023
  */
 @Entity
 @Table(name = "budget")
@@ -30,37 +42,29 @@ public class Budget {
     @Column(name = "endDate", nullable = false)
     private LocalDate endDate;
 
-    @OneToMany
-    @JoinTable(
-            name = "budget_transaction",
-            joinColumns = @JoinColumn(name = "budget_id"),
-            inverseJoinColumns = @JoinColumn(name = "transaction_id")
-    )
-    private Set<Transaction> transactions;
-
-    private static final Logger LOGGER = Logger.getLogger(Budget.class.getName());
+    @NotNull
+    @Column(name = "boundary")
+    private int boundary;
+    
 
     /**
      * Default constructor for budget
+     * 
      * @param startDate start date of the budget. Format (yyyy-MM-dd)
      * @param endDate end date of the budget. Format (yyyy-MM-dd)
+     * @param boundary the upper bound of the budget spendings.
      */
-    public Budget(LocalDate startDate, LocalDate endDate) {
-        try {
-            this.startDate = startDate;
-            this.endDate = endDate;
-        }
-        catch (IllegalArgumentException illegalArgumentException) {
-            LOGGER.warning(illegalArgumentException.getMessage());
-        }
+    public Budget(LocalDate startDate, LocalDate endDate, int boundary) {
+        super();
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.boundary = boundary;
     }
 
     /**
      * Empty constructor that is needed for JPA
      */
-    public Budget() {
-
-    }
+    public Budget() {}
 
     /**
      * Returns the id of budget.
@@ -99,12 +103,7 @@ public class Budget {
      * @param startDate the start date you want. Format (yyyy-MM-dd).
      */
     public void setStartDate(LocalDate startDate) {
-        try {
-            this.startDate = startDate;
-        }
-        catch (IllegalArgumentException illegalArgumentException) {
-            LOGGER.warning(illegalArgumentException.getMessage());
-        }
+       this.startDate = startDate;
     }
 
     /**
@@ -112,31 +111,19 @@ public class Budget {
      * @param endDate the end date you want. Format (yyyy-MM-dd).
      */
     public void setEndDate(LocalDate endDate) {
-        try {
-            this.endDate = endDate;
-        }
-        catch (IllegalArgumentException illegalArgumentException) {
-            LOGGER.warning(illegalArgumentException.getMessage());
-        }
+        this.endDate = endDate;
     }
 
-    /**
-     * Returns transactions
-     * @return transactions
-     */
-    public Set<Transaction> getTransactions() {
-        return transactions;
+    public int getBoundary() {
+        return this.boundary;
     }
 
-    /**
-     * Setts transactions
-     * @param transactions Set of transactions
-     */
-    public void setTransactions(Set<Transaction> transactions) {
-        this.transactions = transactions;
+    public void setBoundary(int boundary) {
+        this.boundary = boundary;
     }
+
 
     public boolean isValid() {
-        return !(this.startDate == null) && !(this.endDate == null);
+        return (this.startDate != null) && (this.endDate != null);
     }
 }

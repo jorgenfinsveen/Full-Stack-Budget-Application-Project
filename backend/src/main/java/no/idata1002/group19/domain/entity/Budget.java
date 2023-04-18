@@ -1,7 +1,6 @@
 package no.idata1002.group19.domain.entity;
 
 import java.time.LocalDate;
-import java.util.logging.Logger;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -121,7 +120,6 @@ public class Budget {
     public void setBoundary(int boundary) {
         this.boundary = boundary;
     }
-
 
     public boolean isValid() {
         return (this.startDate != null) && (this.endDate != null);

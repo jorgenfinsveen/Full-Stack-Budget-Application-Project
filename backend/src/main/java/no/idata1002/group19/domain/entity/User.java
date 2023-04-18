@@ -2,7 +2,8 @@ package no.idata1002.group19.domain.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import java.util.logging.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Represent user entity.
@@ -155,6 +156,8 @@ public class User {
      * @return boolean statement. True if valid, false if not.
      */
     public boolean isValid() {
-        return !"".equals(this.userName) && !"".equals(this.pass);
+        return this.userName != null && !this.userName.trim().isEmpty() &&
+                this.pass != null && !this.pass.trim().isEmpty() &&
+                this.role != null && !this.role.trim().isEmpty();
     }
 }

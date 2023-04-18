@@ -83,11 +83,11 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-/* 
+/*
         http.csrf().disable().cors().and()
             .authorizeHttpRequests().anyRequest().permitAll();
 */
-        
+
         http.csrf()
             .disable()
             .cors()
@@ -105,7 +105,7 @@ public class SecurityConfig {
             .authenticationEntryPoint(exceptionHandler)
             .and()
             .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class);
-        
+
 
         return http.build();
     }

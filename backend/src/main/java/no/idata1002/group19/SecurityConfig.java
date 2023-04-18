@@ -1,9 +1,8 @@
 package no.idata1002.group19;
 
 import java.util.Arrays;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import static org.springframework.security.config.Customizer.withDefaults;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;

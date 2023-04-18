@@ -1,11 +1,17 @@
 package no.idata1002.group19.domain.entity;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import java.time.LocalDate;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 
 /**
  * This class represent Transaction entity.
@@ -178,7 +184,6 @@ public class Transaction {
      */
     public boolean isValid() {
         return this.tname != null && !this.tname.trim().isEmpty() && this.value >= 0
-                && this.description != null && !this.tname.trim().isEmpty()
-                && this.date != null;
+                && this.description != null && this.date != null;
     }
 }

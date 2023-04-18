@@ -1,7 +1,6 @@
 package no.idata1002.group19;
 
 import java.net.InetAddress;
-import java.time.LocalDate;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,11 +9,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.core.env.Environment;
-
-import no.idata1002.group19.domain.entity.Budget;
-import no.idata1002.group19.domain.entity.User;
-import no.idata1002.group19.domain.repository.BudgetRepository;
-import no.idata1002.group19.domain.repository.UserRepository;
 
 /**
  * <h1>Budgeting App</h1>
@@ -39,11 +33,6 @@ public class BudgetingApp implements CommandLineRunner {
 	/** Logger element for logging application events to STDOUT. */
 	private static final Logger LOG = LoggerFactory.getLogger(BudgetingApp.class);
 
-	@Autowired
-	private UserRepository userRepository;
-
-	@Autowired
-	private BudgetRepository budgetRepository;
 
 	/**
 	 * Main method which is called upon application startup.
@@ -76,19 +65,5 @@ public class BudgetingApp implements CommandLineRunner {
 
 		/* Log initial status to STDOUT. */
 		LOG.info("Server instance initialized: " + ip + ":" + port);
-		//populateUserDb();
-	}
-
-
-	private void populateUserDb() {
-		String userPswrd = "$2a$10$eFtJFEOtPgmXikven5xOIOH8LXbUgyyP9Q464JCBpivBb9M9UXLvW";
-		Budget budget = new Budget(LocalDate.now(), LocalDate.now(), 10000);
-
-		budgetRepository.save(budget);
-		userRepository.save(new User("user", userPswrd, "USER", budget));
-	}
-
-	public static void alert() {
-		LOG.info("-----------/login enpoint visited.----------");
 	}
 }

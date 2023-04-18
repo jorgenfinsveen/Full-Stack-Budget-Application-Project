@@ -41,7 +41,7 @@ public class BudgetController {
      * @return ResponseEntity.ok - and HTTP response containing the budget.
      */
     @GetMapping("/{id}")
-    public ResponseEntity getBudgetById(@PathVariable long id) {
+    public ResponseEntity<Budget> getBudgetById(@PathVariable long id) {
         return ResponseEntity.ok(this.budgetService.findById(id));
     }
 
@@ -52,11 +52,11 @@ public class BudgetController {
      * @return ResponseEntity - an HTTP response indicating whether the budget was added successfully.
      */
     @PostMapping("/add")
-    public ResponseEntity addBudget(@RequestBody Budget budget) {
+    public ResponseEntity<String> addBudget(@RequestBody Budget budget) {
         if(!this.budgetService.add(budget)) {
-            return new ResponseEntity("Budget was not added", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Budget was not added", HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity("Budget was added", HttpStatus.CREATED);
+        return new ResponseEntity<>("Budget was added", HttpStatus.CREATED);
     }
 
     /**
@@ -68,16 +68,16 @@ public class BudgetController {
 
      */
     @PutMapping("/{id}")
-    public ResponseEntity update(@PathVariable long id, @RequestBody Budget budget) {
+    public ResponseEntity<String> update(@PathVariable long id, @RequestBody Budget budget) {
         Budget oldBudget = this.budgetService.findById(id);
         if (oldBudget == null) {
-            return new ResponseEntity("didn't find budget", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("didn't find budget", HttpStatus.NOT_FOUND);
         }
         this.budgetService.update(id, budget);
         if (this.budgetService.findById(id) == null) {
-            return new ResponseEntity("Budget didn't update", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Budget didn't update", HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity("Budget was updated", HttpStatus.OK);
+        return new ResponseEntity<>("Budget was updated", HttpStatus.OK);
     }
 
     /**
@@ -86,10 +86,10 @@ public class BudgetController {
      * @return ResponseEntity - an HTTP response indicating whether the budget was deleted successfully.
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity delete(@PathVariable long id) {
+    public ResponseEntity<String> delete(@PathVariable long id) {
         if (!this.budgetService.delete(id)) {
-            return new ResponseEntity("Budget was not removed", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Budget was not removed", HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity("Budget was removed", HttpStatus.OK);
+        return new ResponseEntity<>("Budget was removed", HttpStatus.OK);
     }
 }

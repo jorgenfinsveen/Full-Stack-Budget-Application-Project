@@ -19,7 +19,7 @@ public class BudgetTest {
         LocalDate startDate = LocalDate.of(2023, 4, 18);
         LocalDate endDate = LocalDate.of(2023, 6, 18);
         Budget budget = new Budget(startDate, endDate, 0);
-        assertEquals(budget.getStartDate().toString(), "2023-04-18");
+        assertEquals("2023-04-18", budget.getStartDate().toString());
     }
 
     @Test

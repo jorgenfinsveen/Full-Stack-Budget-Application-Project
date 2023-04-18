@@ -38,7 +38,7 @@ public class UserController {
      * @return ResponseEntity.ok - and HTTP response containing the user.
      */
     @GetMapping("/{id}")
-    public ResponseEntity getUserById(@PathVariable long id) {
+    public ResponseEntity<User> getUserById(@PathVariable long id) {
         return ResponseEntity.ok(this.userService.findById(id));
     }
 
@@ -49,11 +49,11 @@ public class UserController {
      * @return ResponseEntity - an HTTP response indicating whether the user was added successfully.
      */
     @PostMapping("/add")
-    public ResponseEntity addUser(@RequestBody User user) {
+    public ResponseEntity<String> addUser(@RequestBody User user) {
         if(!this.userService.add(user)) {
-            return new ResponseEntity("User was not added", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("User was not added", HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity("User was added", HttpStatus.CREATED);
+        return new ResponseEntity<>("User was added", HttpStatus.CREATED);
     }
 
     /**
@@ -65,16 +65,16 @@ public class UserController {
 
      */
     @PutMapping("/{id}")
-    public ResponseEntity update(@PathVariable long id, @RequestBody User user) {
+    public ResponseEntity<String> update(@PathVariable long id, @RequestBody User user) {
         User oldUSer = this.userService.findById(id);
         if (oldUSer == null) {
-            return new ResponseEntity("didn't find user", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("didn't find user", HttpStatus.NOT_FOUND);
         }
         this.userService.update(id, user);
         if (this.userService.findById(id) == null) {
-            return new ResponseEntity("User didn't update", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("User didn't update", HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity("Product was updated", HttpStatus.OK);
+        return new ResponseEntity<>("Product was updated", HttpStatus.OK);
     }
 
     /**
@@ -83,10 +83,10 @@ public class UserController {
      * @return ResponseEntity - an HTTP response indicating whether the user was deleted successfully.
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity delete(@PathVariable long id) {
+    public ResponseEntity<String> delete(@PathVariable long id) {
         if (!this.userService.delete(id)) {
-            return new ResponseEntity("User was not removed", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("User was not removed", HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity("User was removed", HttpStatus.OK);
+        return new ResponseEntity<>("User was removed", HttpStatus.OK);
     }
 }

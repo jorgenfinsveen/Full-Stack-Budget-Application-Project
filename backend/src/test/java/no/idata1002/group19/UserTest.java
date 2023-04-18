@@ -25,9 +25,9 @@ public class UserTest {
         String pass = "pass";
         String role = "user";
         User user = new User(username,pass,role, budget);
-        assertEquals(user.getUsername(), "user");
-        assertEquals(user.getPassword(), "pass");
-        assertEquals(user.getRole(), "user");
+        assertEquals("user", user.getUsername());
+        assertEquals("pass", user.getPassword());
+        assertEquals("user", user.getRole());
     }
 
     @Test

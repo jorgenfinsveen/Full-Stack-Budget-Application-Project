@@ -37,7 +37,7 @@ public class TransactionController {
      * @return ResponseEntity.ok - and HTTP response containing the transaction.
      */
     @GetMapping("/{id}")
-    public ResponseEntity getTransactionById(@PathVariable long id) {
+    public ResponseEntity<Transaction> getTransactionById(@PathVariable long id) {
         return ResponseEntity.ok(this.transasctionService.findById(id));
     }
 
@@ -48,11 +48,11 @@ public class TransactionController {
      * @return ResponseEntity - an HTTP response indicating whether the transaction was added successfully.
      */
     @PostMapping("/add")
-    public ResponseEntity addTransaction(@RequestBody Transaction transaction) {
+    public ResponseEntity<String> addTransaction(@RequestBody Transaction transaction) {
         if(!this.transasctionService.add(transaction)) {
-            return new ResponseEntity("Transaction was not added", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Transaction was not added", HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity("Transaction was added", HttpStatus.CREATED);
+        return new ResponseEntity<>("Transaction was added", HttpStatus.CREATED);
     }
 
     /**
@@ -64,16 +64,16 @@ public class TransactionController {
 
      */
     @PutMapping("/{id}")
-    public ResponseEntity update(@PathVariable long id, @RequestBody Transaction transaction) {
+    public ResponseEntity<String> update(@PathVariable long id, @RequestBody Transaction transaction) {
         Transaction oldTransaction = this.transasctionService.findById(id);
         if (oldTransaction == null) {
-            return new ResponseEntity("didn't find transaction", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("didn't find transaction", HttpStatus.NOT_FOUND);
         }
         this.transasctionService.update(id, transaction);
         if (this.transasctionService.findById(id) == null) {
-            return new ResponseEntity("Transaction didn't update", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Transaction didn't update", HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity("Transaction was updated", HttpStatus.OK);
+        return new ResponseEntity<>("Transaction was updated", HttpStatus.OK);
     }
 
     /**
@@ -82,10 +82,10 @@ public class TransactionController {
      * @return ResponseEntity - an HTTP response indicating whether the transaction was deleted successfully.
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity delete(@PathVariable long id) {
+    public ResponseEntity<String> delete(@PathVariable long id) {
         if (!this.transasctionService.delete(id)) {
-            return new ResponseEntity("Transaction was not removed", HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("Transaction was not removed", HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity("Transaction was removed", HttpStatus.OK);
+        return new ResponseEntity<>("Transaction was removed", HttpStatus.OK);
     }
 }

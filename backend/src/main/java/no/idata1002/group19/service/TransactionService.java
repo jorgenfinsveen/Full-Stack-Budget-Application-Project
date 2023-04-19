@@ -1,16 +1,16 @@
 package no.idata1002.group19.service;
 
-import no.idata1002.group19.domain.entity.Budget;
-import no.idata1002.group19.domain.entity.Transaction;
-import no.idata1002.group19.domain.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import no.idata1002.group19.domain.entity.Transaction;
+import no.idata1002.group19.domain.repository.TransactionRepository;
 
 /**
  * Represent the service class for transaction
  */
 @Service
-public class TransasctionService {
+public class TransactionService {
 
     @Autowired
     TransactionRepository transactionRepository;

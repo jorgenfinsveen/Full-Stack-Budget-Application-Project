@@ -1,7 +1,7 @@
 package no.idata1002.group19.web.api;
 
-import no.idata1002.group19.domain.entity.Transaction;
-import no.idata1002.group19.service.TransasctionService;
+import no.idata1002.group19.domain.entity.Value;
+import no.idata1002.group19.service.ValueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,10 +15,10 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/api/transaction")
-public class TransactionController {
+public class ValueController {
 
     @Autowired
-    private TransasctionService transasctionService;
+    private ValueService transasctionService;
 
     /**
      * Retrieves a list of all transaction from the TransactionService and returns them as an HTTP response.
@@ -26,8 +26,8 @@ public class TransactionController {
      * @return ResponseEntity<List<Transaction>> - an HTTP response containing a list of all transaction
      */
     @GetMapping("/getAll")
-    public ResponseEntity<List<Transaction>> getTransaction() {
-        return ResponseEntity.ok((List<Transaction>) this.transasctionService.getAll());
+    public ResponseEntity<List<Value>> getTransaction() {
+        return ResponseEntity.ok((List<Value>) this.transasctionService.getAll());
     }
 
     /**
@@ -37,7 +37,7 @@ public class TransactionController {
      * @return ResponseEntity.ok - and HTTP response containing the transaction.
      */
     @GetMapping("/{id}")
-    public ResponseEntity<Transaction> getTransactionById(@PathVariable long id) {
+    public ResponseEntity<Value> getTransactionById(@PathVariable long id) {
         return ResponseEntity.ok(this.transasctionService.findById(id));
     }
 
@@ -48,7 +48,7 @@ public class TransactionController {
      * @return ResponseEntity - an HTTP response indicating whether the transaction was added successfully.
      */
     @PostMapping("/add")
-    public ResponseEntity<String> addTransaction(@RequestBody Transaction transaction) {
+    public ResponseEntity<String> addTransaction(@RequestBody Value transaction) {
         if(!this.transasctionService.add(transaction)) {
             return new ResponseEntity<>("Transaction was not added", HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -64,8 +64,8 @@ public class TransactionController {
 
      */
     @PutMapping("/{id}")
-    public ResponseEntity<String> update(@PathVariable long id, @RequestBody Transaction transaction) {
-        Transaction oldTransaction = this.transasctionService.findById(id);
+    public ResponseEntity<String> update(@PathVariable long id, @RequestBody Value transaction) {
+        Value oldTransaction = this.transasctionService.findById(id);
         if (oldTransaction == null) {
             return new ResponseEntity<>("didn't find transaction", HttpStatus.NOT_FOUND);
         }

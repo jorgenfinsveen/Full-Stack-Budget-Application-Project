@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import no.idata1002.group19.domain.entity.Transaction;
 import no.idata1002.group19.domain.repository.TransactionRepository;
 import no.idata1002.group19.service.TransactionService;
-import java.util.List;
 
 /**
  * Controller class for transaction entity.

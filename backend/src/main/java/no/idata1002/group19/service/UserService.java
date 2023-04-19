@@ -1,10 +1,10 @@
 package no.idata1002.group19.service;
 
-import no.idata1002.group19.domain.entity.Budget;
-import no.idata1002.group19.domain.entity.User;
-import no.idata1002.group19.domain.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import no.idata1002.group19.domain.entity.User;
+import no.idata1002.group19.domain.repository.UserRepository;
 
 /**
  * This class represent the service class for user entity

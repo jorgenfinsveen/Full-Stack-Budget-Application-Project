@@ -1,6 +1,7 @@
 package no.idata1002.group19.web.api;
 
 import no.idata1002.group19.domain.entity.Transaction;
+import no.idata1002.group19.domain.repository.TransactionRepository;
 import no.idata1002.group19.service.TransasctionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,9 @@ public class TransactionController {
     @Autowired
     private TransasctionService transasctionService;
 
+    @Autowired
+    TransactionRepository repository;
+
     /**
      * Retrieves a list of all transaction from the TransactionService and returns them as an HTTP response.
      *
@@ -28,6 +32,11 @@ public class TransactionController {
     @GetMapping("/getAll")
     public ResponseEntity<List<Transaction>> getTransaction() {
         return ResponseEntity.ok((List<Transaction>) this.transasctionService.getAll());
+    }
+
+    @GetMapping("/expenses={id}")
+    public Iterable<Transaction> getExpensesById(@PathVariable int id) {
+        return repository.getExpensesByBudgetId(id);
     }
 
     /**

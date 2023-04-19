@@ -51,10 +51,7 @@ public class LoginController {
 		return ResponseEntity.ok()
 			.header(HttpHeaders.AUTHORIZATION, "Bearer " + jwts)
 			.header(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, "Authorization")
-			.header(
-				"Budget",
-				budget.get() 
-			)
+			.header(HttpHeaders.AUTHORIZATION, "BudgetId " + budget.get())
 			.build();
 	}
 

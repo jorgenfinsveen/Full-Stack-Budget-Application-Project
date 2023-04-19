@@ -118,10 +118,10 @@ Distributed under NTNU. For educational purposes only
 
 [Even Johan Pereira Haslerud](https://github.com/ejhasler?tab=overview&from=2023-04-01&to=2023-04-14) - ejhasler@stud.ntnu.no
 
-
+[Håvard Hetland Vestbø](https://github.com/havardhvestbo) - haavarhv@stud.ntnu.no
 
 Petter Edvardsen
-Håvard Hetland Vestbø
+
 Ole Kristan Dvergsdal
 
 

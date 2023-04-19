@@ -21,8 +21,8 @@ import jakarta.validation.constraints.NotNull;
  * @version 16.04.2023
  */
 @Entity
-@Table(name = "transaction")
-public class Transaction {
+@Table(name = "value")
+public class Value {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -57,7 +57,7 @@ public class Transaction {
      * @param description description of the transaction.
      * @param date the date of the transaction.
      */
-    public Transaction(String tname, int value, String description, LocalDate date) {
+    public Value(String tname, int value, String description, LocalDate date) {
         super();
         this.tname = stringChecker(tname, "tname");
         this.value = numberChecker(value, "value");
@@ -68,7 +68,7 @@ public class Transaction {
     /**
      * Empty constructor that is needed for JPA
      */
-    public Transaction() {}
+    public Value() {}
 
     /**
      * Checks if the string is valid

@@ -1,8 +1,7 @@
 package no.idata1002.group19.service;
 
-import no.idata1002.group19.domain.entity.Budget;
-import no.idata1002.group19.domain.entity.Transaction;
-import no.idata1002.group19.domain.repository.TransactionRepository;
+import no.idata1002.group19.domain.entity.Value;
+import no.idata1002.group19.domain.repository.ValueRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,16 +9,16 @@ import org.springframework.stereotype.Service;
  * Represent the service class for transaction
  */
 @Service
-public class TransasctionService {
+public class ValueService {
 
     @Autowired
-    TransactionRepository transactionRepository;
+    ValueRepository transactionRepository;
 
     /**
      * Returns all transactions
      * @return transactions
      */
-    public Iterable<Transaction> getAll() {
+    public Iterable<Value> getAll() {
         return this.transactionRepository.findAll();
     }
 
@@ -28,7 +27,7 @@ public class TransasctionService {
      * @param id of the transaction that you want to find
      * @return transaction
      */
-    public Transaction findById(long id) {
+    public Value findById(long id) {
         return this.transactionRepository.findById(id).orElse(null);
     }
 
@@ -37,7 +36,7 @@ public class TransasctionService {
      * @param transaction the transaction that you want to add
      * @return boolean statement. True if it was added, false if not.
      */
-    public boolean add(Transaction transaction) {
+    public boolean add(Value transaction) {
         boolean added = false;
         if(caBeAdded(transaction)) {
             this.transactionRepository.save(transaction);
@@ -51,7 +50,7 @@ public class TransasctionService {
      * @param transaction the transaction that you want to check
      * @return boolean statement. True if it can be added, false if not.
      */
-    private boolean caBeAdded(Transaction transaction) {
+    private boolean caBeAdded(Value transaction) {
         return transaction != null && transaction.isValid();
     }
 
@@ -74,8 +73,8 @@ public class TransasctionService {
      * @param id of the transaction that you want to update.
      * @param transaction what you want the old transaction to be updated to.
      */
-    public void update(long id, Transaction transaction) {
-        Transaction existingTransaction = findById(id);
+    public void update(long id, Value transaction) {
+        Value existingTransaction = findById(id);
         String errorMessage = null;
         if (existingTransaction == null) {
             errorMessage = "No transaction exists with the id " + id;

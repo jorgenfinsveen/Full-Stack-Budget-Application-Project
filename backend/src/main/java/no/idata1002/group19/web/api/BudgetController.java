@@ -49,8 +49,8 @@ public class BudgetController {
      * @param budget - the budget object representing the budget to add.
      * @return ResponseEntity - an HTTP response indicating whether the budget was added successfully.
      */
-    @PostMapping("/budgets/add")
-    public ResponseEntity<String> addBudget(@RequestBody BudgetCredentials credentials) {
+    @PostMapping("/budgets")
+    public ResponseEntity<?> addBudget(@RequestBody BudgetCredentials credentials) {
         Budget budget = new Budget(
             LocalDate.parse(credentials.getStartDate()),
             LocalDate.parse(credentials.getEndDate()),

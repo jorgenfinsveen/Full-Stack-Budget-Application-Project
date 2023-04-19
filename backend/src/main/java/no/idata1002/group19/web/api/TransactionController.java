@@ -81,7 +81,7 @@ public class TransactionController {
      * @param transaction - the transaction object representing the transaction to add.
      * @return ResponseEntity - an HTTP response indicating whether the transaction was added successfully.
      */
-    @PostMapping("/transactions/add")
+    @PostMapping("/transactions")
     public ResponseEntity<?> addTransaction(@RequestBody TransactionCredentials credentials) {
         ResponseEntity<?> response;
         Optional<Budget> budget = budgetRepository.findById(credentials.getBid());

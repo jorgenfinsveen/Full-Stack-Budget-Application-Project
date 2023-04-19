@@ -96,7 +96,7 @@ public class SecurityConfig {
 		boolean debug = "DEBUG".equalsIgnoreCase(debugging_mode);
         
         if (debug) {
-            http.csrf(withDefaults())
+            http.csrf(csrf -> csrf.disable())
                 .cors(withDefaults())
                 .authorizeHttpRequests()
                 .anyRequest()

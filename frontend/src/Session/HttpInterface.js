@@ -27,7 +27,6 @@ const HttpInterface = {
      * @return representation of the user's budget.
      */
     fetchBudget: async function (bid) {
-        var successful = false;
 
         await fetch(this.SERVER_URL + "/budgets/" + bid,
         {

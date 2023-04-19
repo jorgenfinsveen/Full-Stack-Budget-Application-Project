@@ -3,8 +3,11 @@ package no.idata1002.group19;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
+import static org.springframework.security.config.Customizer.withDefaults;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -46,6 +49,10 @@ public class SecurityConfig {
     @Autowired
     private AuthEntryPoint exceptionHandler;
 
+    /** Represents the environment in which the application is running. */
+	@Autowired
+	private Environment environment;
+
     private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
 
@@ -82,30 +89,35 @@ public class SecurityConfig {
     }
 
     @Bean
+    @SuppressWarnings(value = { "all" })
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        return http.csrf()
-            .disable()
-            .cors()
-            .and()
-            .sessionManagement()
-            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            .and()
-            .authorizeHttpRequests()
-            .requestMatchers(HttpMethod.POST, "/login")
-            .permitAll()
-            .anyRequest()
-            .authenticated()
-            .and()
-            .exceptionHandling()
-            .authenticationEntryPoint(exceptionHandler)
-            .and()
-            .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
-            .build();
 
-        /*
-        return http.csrf().disable().cors().and()
-            .authorizeHttpRequests().anyRequest().permitAll().build();
-        */
+        String debugging_mode = (environment.getProperty("debugging_mode")).trim();
+		boolean debug = "DEBUG".equalsIgnoreCase(debugging_mode);
+        
+        if (debug) {
+            http.csrf(withDefaults())
+                .cors(withDefaults())
+                .authorizeHttpRequests()
+                .anyRequest()
+                .permitAll();
+        } else {
+            http.csrf(csrf -> csrf.disable())
+                .cors(withDefaults())
+                .sessionManagement(management -> management
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests()
+                .requestMatchers(HttpMethod.POST, "/login")
+                .permitAll()
+                .anyRequest()
+                .authenticated()
+                .and()
+                .exceptionHandling(handling -> handling
+                        .authenticationEntryPoint(exceptionHandler))
+                .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class);
+        }    
+
+        return http.build();
     }
 
     @Bean

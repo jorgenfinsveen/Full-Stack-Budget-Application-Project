@@ -65,5 +65,13 @@ public class BudgetingApp implements CommandLineRunner {
 
 		/* Log initial status to STDOUT. */
 		LOG.info("Server instance initialized: " + ip + ":" + port);
+
+		String debug = (environment.getProperty("debugging_mode"));
+		if (debug != null) {
+			debug = debug.trim();
+			boolean b = "DEBUG".equalsIgnoreCase(debug);
+
+			LOG.info("Application debug-mode: " + b);
+		}
 	}
 }

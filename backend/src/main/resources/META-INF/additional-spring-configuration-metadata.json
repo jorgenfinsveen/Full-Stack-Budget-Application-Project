@@ -1,0 +1,5 @@
+{"properties": [{
+  "name": "debugging_mode",
+  "type": "java.lang.String",
+  "description": "Debugging mode indicating whether the application are to be debugged. If set to true, the security measures will be disabled."
+}]}

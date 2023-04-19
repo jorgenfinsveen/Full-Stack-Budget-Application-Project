@@ -57,12 +57,13 @@ public class Transaction {
      * @param description description of the transaction.
      * @param date the date of the transaction.
      */
-    public Transaction(String tname, int value, String description, LocalDate date) {
+    public Transaction(String tname, int value, String description, LocalDate date, Budget budget) {
         super();
         this.tname = stringChecker(tname, "tname");
         this.value = numberChecker(value, "value");
         this.description = stringChecker(description, "description");
         this.date = date;
+        this.budget = budget;
     }
 
     /**
@@ -176,6 +177,14 @@ public class Transaction {
      */
     public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    public Budget getBudget() {
+        return budget;
+    }
+
+    public void setBudget(Budget budget) {
+        this.budget = budget;
     }
 
     /**

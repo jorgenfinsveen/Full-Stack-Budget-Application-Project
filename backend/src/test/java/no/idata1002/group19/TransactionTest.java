@@ -1,6 +1,7 @@
 package no.idata1002.group19;
 
 import nl.altindag.log.LogCaptor;
+import no.idata1002.group19.domain.entity.Budget;
 import no.idata1002.group19.domain.entity.Transaction;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -15,6 +16,8 @@ import java.time.LocalDate;
 @SpringBootTest
 public class TransactionTest {
 
+    private Budget budget = new Budget();
+
     @Test
     void testConstructorWhitValidInputs() {
         String tname = "test";
@@ -22,7 +25,7 @@ public class TransactionTest {
         String description = "test test";
         LocalDate localDate = LocalDate.of(2023,04,18);
 
-        Transaction transaction = new Transaction(tname, value, description, localDate);
+        Transaction transaction = new Transaction(tname, value, description, localDate, budget);
 
         assertEquals("test", transaction.getTname());
         assertEquals(10, transaction.getValue());
@@ -35,7 +38,7 @@ public class TransactionTest {
         String expectedWarningMassageForTname = "Caught Illegal Argument Exception: The string tname cant be empty or null";
         LogCaptor logCaptor = LogCaptor.forClass(Transaction.class);
         LocalDate localDate = LocalDate.of(2023,4,18);
-        Transaction transaction = new Transaction(null, 10, "null", localDate);
+        Transaction transaction = new Transaction(null, 10, "null", localDate, budget);
         assertThat(logCaptor.getWarnLogs().contains(expectedWarningMassageForTname));
     }
 
@@ -44,7 +47,7 @@ public class TransactionTest {
         String expectedWarningMassageForTname = "Caught Illegal Argument Exception: The string tname cant be empty or null";
         LogCaptor logCaptor = LogCaptor.forClass(Transaction.class);
         LocalDate localDate = LocalDate.of(2023,4,18);
-        Transaction transaction = new Transaction("", 10, "null", localDate);
+        Transaction transaction = new Transaction("", 10, "null", localDate, budget);
         assertThat(logCaptor.getWarnLogs().contains(expectedWarningMassageForTname));
     }
 
@@ -53,7 +56,7 @@ public class TransactionTest {
         String expectedWarningMassageForValue = "Caught Illegal Argument Exception: The integer value cant be below 0";
         LogCaptor logCaptor = LogCaptor.forClass(Transaction.class);
         LocalDate localDate = LocalDate.of(2023,4,18);
-        Transaction transaction = new Transaction("null", -1, "null", localDate);
+        Transaction transaction = new Transaction("null", -1, "null", localDate, budget);
         assertThat(logCaptor.getWarnLogs().contains(expectedWarningMassageForValue));
     }
 
@@ -62,7 +65,7 @@ public class TransactionTest {
         String expectedWarningMassageForDescription = "Caught Illegal Argument Exception: The string description cant be empty or null";
         LogCaptor logCaptor = LogCaptor.forClass(Transaction.class);
         LocalDate localDate = LocalDate.of(2023,4,18);
-        Transaction transaction = new Transaction("null", 10, null, localDate);
+        Transaction transaction = new Transaction("null", 10, null, localDate, budget);
         assertThat(logCaptor.getWarnLogs().contains(expectedWarningMassageForDescription));
     }
 
@@ -71,19 +74,19 @@ public class TransactionTest {
         String expectedWarningMassageForDescription = "Caught Illegal Argument Exception: The string description cant be empty or null";
         LogCaptor logCaptor = LogCaptor.forClass(Transaction.class);
         LocalDate localDate = LocalDate.of(2023,4,18);
-        Transaction transaction = new Transaction("null", 10, "", localDate);
+        Transaction transaction = new Transaction("null", 10, "", localDate, budget);
         assertThat(logCaptor.getWarnLogs().contains(expectedWarningMassageForDescription));
     }
 
     @Test
     void testIsValidPositive() {
-        Transaction transaction = new Transaction("Groceries", 50, "Bought groceries for the week", LocalDate.now());
+        Transaction transaction = new Transaction("Groceries", 50, "Bought groceries for the week", LocalDate.now(), budget);
         assertTrue(transaction.isValid());
     }
 
     @Test
     void testIsValidNegative() {
-        Transaction transaction = new Transaction(null, -10, "Invalid transaction", null);
+        Transaction transaction = new Transaction(null, -10, "Invalid transaction", null, budget);
         assertFalse(transaction.isValid());
     }
 

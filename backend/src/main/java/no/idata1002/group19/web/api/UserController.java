@@ -1,13 +1,24 @@
 package no.idata1002.group19.web.api;
 
-import no.idata1002.group19.domain.entity.User;
-import no.idata1002.group19.service.UserService;
+import java.time.LocalDate;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import no.idata1002.group19.domain.entity.Budget;
+import no.idata1002.group19.domain.entity.User;
+import no.idata1002.group19.domain.entity.UserCredentials;
+import no.idata1002.group19.domain.repository.BudgetRepository;
+import no.idata1002.group19.domain.repository.UserRepository;
 
 /**
  * Controller class for user.
@@ -15,21 +26,25 @@ import java.util.List;
  *
  */
 @RestController
-@RequestMapping("/api/user")
 public class UserController {
 
     @Autowired
-    private UserService userService;
+    private UserRepository repository;
+
+    @Autowired
+    private BudgetRepository budgetRepository;
+
 
     /**
      * Retrieves a list of all users from the UserService and returns them as an HTTP response.
      *
      * @return ResponseEntity<List<User>> - an HTTP response containing a list of all users
      */
-    @GetMapping("/getAll")
-    public ResponseEntity<List<User>> getUsers() {
-        return ResponseEntity.ok((List<User>) this.userService.getAll());
+    @GetMapping("/users")
+    public Iterable<User> getUsers() {
+        return repository.findAll();
     }
+
 
     /**
      * Retrieves a user from userRepository and returns them as an HTTP response
@@ -37,10 +52,19 @@ public class UserController {
      * @param id of the user that you want to get
      * @return ResponseEntity.ok - and HTTP response containing the user.
      */
-    @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable long id) {
-        return ResponseEntity.ok(this.userService.findById(id));
+    @GetMapping("/users/{id}")
+    public ResponseEntity<?> getUserById(@PathVariable long id) {
+        ResponseEntity<?> response;
+        Optional<User> opt = repository.findById(id);
+
+        if (opt.isPresent()) {
+            response = ResponseEntity.ok(opt.get());
+        } else {
+            response = (ResponseEntity<?>) ResponseEntity.notFound();
+        }
+        return response;
     }
+
 
     /**
      * Adds a new user to the system using the UserService and returns an appropriate HTTP response.
@@ -48,11 +72,22 @@ public class UserController {
      * @param user - the User object representing the user to add.
      * @return ResponseEntity - an HTTP response indicating whether the user was added successfully.
      */
-    @PostMapping("/add")
-    public ResponseEntity<String> addUser(@RequestBody User user) {
-        if(!this.userService.add(user)) {
-            return new ResponseEntity<>("User was not added", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    @PostMapping("/users/add")
+    public ResponseEntity<?> addUser(@RequestBody UserCredentials credentials) {
+        Budget budget = new Budget(  
+            LocalDate.of(2023, 4, 18),
+            LocalDate.of(2023, 8, 19),
+            10000
+        );
+
+        User user = new User(
+            credentials.getUsername(),
+            credentials.getPassword(),
+            credentials.getRole(),
+            budget
+        );
+        repository.save(user);
+
         return new ResponseEntity<>("User was added", HttpStatus.CREATED);
     }
 
@@ -64,17 +99,28 @@ public class UserController {
      * @return ResponseEntity - an HTTP response indicating whether the user was updated successfully.
 
      */
-    @PutMapping("/{id}")
-    public ResponseEntity<String> update(@PathVariable long id, @RequestBody User user) {
-        User oldUSer = this.userService.findById(id);
-        if (oldUSer == null) {
-            return new ResponseEntity<>("didn't find user", HttpStatus.NOT_FOUND);
+    @PutMapping("/users/{id}")
+    public ResponseEntity<?> update(@PathVariable long id, @RequestBody UserCredentials credentials) {
+        ResponseEntity<?> response;
+        Optional<User> opt = repository.findById(id);
+        Optional<Budget> budget = budgetRepository.findById(credentials.getBid());
+
+        if (opt.isPresent()) {
+            if (budget.isPresent()) {
+                User tuple = opt.get();
+                repository.delete(tuple);
+                tuple.setUsername(credentials.getUsername());
+                tuple.setPassword(credentials.getPassword());
+                tuple.setRole(credentials.getRole());
+                repository.save(tuple);
+                response = new ResponseEntity<>("User was updated", HttpStatus.OK);
+            } else {
+                response = new ResponseEntity<>("Budget was not found.", HttpStatus.NOT_FOUND);
+            }
+        } else {
+            response = new ResponseEntity<>("User was not found.", HttpStatus.NOT_FOUND);
         }
-        this.userService.update(id, user);
-        if (this.userService.findById(id) == null) {
-            return new ResponseEntity<>("User didn't update", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-        return new ResponseEntity<>("Product was updated", HttpStatus.OK);
+        return response;
     }
 
     /**
@@ -82,11 +128,17 @@ public class UserController {
      * @param id - the ID of the user to delete.
      * @return ResponseEntity - an HTTP response indicating whether the user was deleted successfully.
      */
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable long id) {
-        if (!this.userService.delete(id)) {
-            return new ResponseEntity<>("User was not removed", HttpStatus.INTERNAL_SERVER_ERROR);
+    @DeleteMapping("/users/{id}")
+    public ResponseEntity<?> delete(@PathVariable long id) {
+        ResponseEntity<?> response;
+        Optional<User> opt = repository.findById(id);
+
+        if (opt.isPresent()) {
+            repository.delete(opt.get());
+            response = new ResponseEntity<>("User was removed", HttpStatus.OK);
+        } else {
+            response = new ResponseEntity<>("User was not found", HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>("User was removed", HttpStatus.OK);
+        return response;
     }
 }

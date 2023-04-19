@@ -1,13 +1,22 @@
 package no.idata1002.group19.web.api;
 
-import no.idata1002.group19.service.BudgetService;
+import java.time.LocalDate;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import no.idata1002.group19.domain.entity.Budget;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import no.idata1002.group19.domain.entity.Budget;
+import no.idata1002.group19.domain.entity.BudgetCredentials;
+import no.idata1002.group19.domain.repository.BudgetRepository;
 
 /**
  * Represents an Budget Controller class that is a RESTful
@@ -17,33 +26,22 @@ import java.util.List;
  * @since   16.04.2023
  * @version 16.04.2023
  */
-//@RestController
-//@RequestMapping("/api/budget")
+@RestController
 public class BudgetController {
 
     @Autowired
-    private BudgetService budgetService;
+    private BudgetRepository repository;
 
     /**
      * Retrieves a list of all budgets from the TransactionService and returns them as an HTTP response.
      *
      * @return ResponseEntity<List<Budget>> - an HTTP response containing a list of all budgets
      */
-    @GetMapping("/getAll")
-    public ResponseEntity<List<Budget>> getBudgets() {
-        return ResponseEntity.ok((List<Budget>) this.budgetService.getAll());
+    @GetMapping("/budgets")
+    public Iterable<Budget> getBudgets() {
+        return repository.findAll();
     }
 
-    /**
-     * Retrieves a budget from BudgetService and returns them as an HTTP response
-     *
-     * @param id of the budget that you want to get
-     * @return ResponseEntity.ok - and HTTP response containing the budget.
-     */
-    @GetMapping("/{id}")
-    public ResponseEntity<Budget> getBudgetById(@PathVariable long id) {
-        return ResponseEntity.ok(this.budgetService.findById(id));
-    }
 
     /**
      * Adds a new budget to the system using the BudgetService and returns an appropriate HTTP response.
@@ -51,14 +49,18 @@ public class BudgetController {
      * @param budget - the budget object representing the budget to add.
      * @return ResponseEntity - an HTTP response indicating whether the budget was added successfully.
      */
-    @PostMapping("/add")
-    public ResponseEntity<String> addBudget(@RequestBody Budget budget) {
-        if(!this.budgetService.add(budget)) {
-            return new ResponseEntity<>("Budget was not added", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    @PostMapping("/budgets/add")
+    public ResponseEntity<String> addBudget(@RequestBody BudgetCredentials credentials) {
+        Budget budget = new Budget(
+            LocalDate.parse(credentials.getStartDate()),
+            LocalDate.parse(credentials.getEndDate()),
+            credentials.getBoundary()
+        );
+        repository.save(budget);
         return new ResponseEntity<>("Budget was added", HttpStatus.CREATED);
     }
 
+    
     /**
      * Updates a budget with the specified ID using the BudgetService and returns an appropriate HTTP response.
      *
@@ -67,29 +69,42 @@ public class BudgetController {
      * @return ResponseEntity - an HTTP response indicating whether the budget was updated successfully.
 
      */
-    @PutMapping("/{id}")
-    public ResponseEntity<String> update(@PathVariable long id, @RequestBody Budget budget) {
-        Budget oldBudget = this.budgetService.findById(id);
-        if (oldBudget == null) {
-            return new ResponseEntity<>("didn't find budget", HttpStatus.NOT_FOUND);
+    @PutMapping("/budgets/{id}")
+    public ResponseEntity<String> update(@PathVariable long id, @RequestBody BudgetCredentials credentials) {
+        ResponseEntity<String> response;
+        Optional<Budget> opt = repository.findById(id);
+
+        if (opt.isPresent()) {
+            Budget tuple = opt.get();
+            repository.delete(tuple);
+            tuple.setStartDate(LocalDate.parse(credentials.getStartDate()));
+            tuple.setEndDate(LocalDate.parse(credentials.getEndDate()));
+            tuple.setBoundary(credentials.getBoundary());
+            repository.save(tuple);
+            response = new ResponseEntity<>("Budget was updated", HttpStatus.OK);
+        } else {
+            response = new ResponseEntity<>("Budget was not found.", HttpStatus.NOT_FOUND);
         }
-        this.budgetService.update(id, budget);
-        if (this.budgetService.findById(id) == null) {
-            return new ResponseEntity<>("Budget didn't update", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-        return new ResponseEntity<>("Budget was updated", HttpStatus.OK);
+        return response;
     }
+
 
     /**
      * Deletes a budget with the specified ID using the BudgetService and returns an appropriate HTTP response.
      * @param id - the ID of the budget to delete.
      * @return ResponseEntity - an HTTP response indicating whether the budget was deleted successfully.
      */
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/budgets/{id}")
     public ResponseEntity<String> delete(@PathVariable long id) {
-        if (!this.budgetService.delete(id)) {
-            return new ResponseEntity<>("Budget was not removed", HttpStatus.INTERNAL_SERVER_ERROR);
+        ResponseEntity<String> response;
+        Optional<Budget> opt = repository.findById(id);
+
+        if (opt.isPresent()) {
+            repository.delete(opt.get());
+            response = new ResponseEntity<>("Budget was removed", HttpStatus.OK);
+        } else {
+            response = new ResponseEntity<>("Budget was not found", HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>("Budget was removed", HttpStatus.OK);
+        return response;
     }
 }

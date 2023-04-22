@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -45,7 +46,7 @@ public class Transaction {
     @Column(name = "date", nullable = false)
     private LocalDate date;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "budget_id", referencedColumnName = "bid")
     private Budget budget;
 
@@ -60,7 +61,7 @@ public class Transaction {
     public Transaction(String tname, int value, String description, LocalDate date, Budget budget) {
         super();
         this.tname = stringChecker(tname, "tname");
-        this.value = numberChecker(value, "value");
+        this.value = value;
         this.description = stringChecker(description, "description");
         this.date = date;
         this.budget = budget;
@@ -83,20 +84,6 @@ public class Transaction {
             throw new IllegalArgumentException("The string " + "'" + prefiks + "'" + " cant be empty or null");
         }
         return string;
-    }
-
-    /**
-     * Checks if the number is valid
-     *
-     * @param n the number to be checkt.
-     * @param prefiks name of the number
-     * @return if the number is correct, returns the number.
-     */
-    private int numberChecker(int n, String prefiks) {
-        if(n < 0) {
-            throw new IllegalArgumentException("The integer " + prefiks + " cant be below 0");
-        }
-        return n;
     }
 
     /**

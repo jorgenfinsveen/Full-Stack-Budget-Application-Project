@@ -107,7 +107,7 @@ public class SecurityConfig {
                 .sessionManagement(management -> management
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests()
-                .requestMatchers(HttpMethod.POST, "/login")
+                .requestMatchers(HttpMethod.POST, "/login", "/users")
                 .permitAll()
                 .anyRequest()
                 .authenticated()

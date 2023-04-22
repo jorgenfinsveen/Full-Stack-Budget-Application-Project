@@ -60,3 +60,19 @@
     text-transform: capitalize;
     color: #868b94;
 }
+
+#button-bar {
+    height: 150%;
+    width: 200%;
+}
+
+#return-button-container {
+    display: inline-block;
+    margin-right: -5rem;
+    margin-left: -20rem;
+}
+
+#sign-up-button-container {
+    display: inline-block;
+    width: 50%;
+}

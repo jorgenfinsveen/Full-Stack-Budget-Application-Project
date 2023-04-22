@@ -1,7 +1,9 @@
 import React from 'react';
 import CircularSlider from '@fseehawer/react-circular-slider';
+import { BUDGET } from '../Session/Session';
 
 export function Slider() {
+
     return (
         <CircularSlider
             label="KR"
@@ -13,14 +15,14 @@ export function Slider() {
             progressSize={24}
             trackColor="#eeeeee"
             trackSize={24}
-            dataIndex={19250}
+            dataIndex={BUDGET.getBoundary()}
             knobPosition={"bottom"}
             valueFontSize={"3rem"}
             labelFontSize={"1.5rem"}
             min={0}
             max={25_000}
             verticalOffset={"2rem"}
-            onChange={ value => { console.log(value); } }
+            onChange={ value => { BUDGET.setBoundary(value); } }
         />
     );
 }; 

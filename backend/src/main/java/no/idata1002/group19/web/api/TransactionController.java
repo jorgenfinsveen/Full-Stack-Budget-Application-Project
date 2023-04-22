@@ -30,8 +30,10 @@ public class TransactionController {
     @Autowired
     TransactionRepository repository;
 
+    
     @Autowired
     BudgetRepository budgetRepository;
+    
 
     /**
      * Retrieves a list of all transaction from the TransactionService and returns them as an HTTP response.
@@ -46,12 +48,12 @@ public class TransactionController {
 
     @GetMapping("/transactions/expensesById/{id}")
     public Iterable<Transaction> getExpensesById(@PathVariable String id) {
-        return repository.getExpensesByBudgetId(Integer.parseInt(id));
+        return repository.getExpensesByBudgetIdOrderByDateAsc(Integer.parseInt(id));
     }
 
     @GetMapping("/transactions/incomesById/{id}")
     public Iterable<Transaction> getIncomesById(@PathVariable String id) {
-        return repository.getIncomesByBudgetId(Integer.parseInt(id));
+        return repository.getIncomesByBudgetIdOrderByDateAsc(Integer.parseInt(id));
     }
 
 
@@ -109,32 +111,17 @@ public class TransactionController {
      * @param id - the ID of the transaction to update.
      * @param transaction - the Transaction object representing the updated Transaction.
      * @return ResponseEntity - an HTTP response indicating whether the transaction was updated successfully.
-
      */
     @PutMapping("/transactions/{id}")
     public ResponseEntity<?> update(@PathVariable long id, @RequestBody TransactionCredentials credentials) {
-        ResponseEntity<?> response;
-        Optional<Transaction> opt = repository.findById(id);
-        Optional<Budget> budget;
-
-        if (opt.isPresent()) {
-            Transaction tuple = opt.get();
-            budget = budgetRepository.findById(credentials.getBid());
-            if (budget.isPresent()) {
-                repository.delete(tuple);
-                tuple.setTname(credentials.getName());
-                tuple.setValue(credentials.getValue());
-                tuple.setDescription(credentials.getDescription());
-                tuple.setBudget(budget.get());
-                repository.save(tuple);
-                response = new ResponseEntity<>("Budget was updated", HttpStatus.OK);
-            } else {
-                response = new ResponseEntity<>("Budget was not found.", HttpStatus.NOT_FOUND);
-            }
-        } else {
-            response = new ResponseEntity<>("Transaction was not found.", HttpStatus.NOT_FOUND);
-        }
-        return response;
+        String name = credentials.getName();
+        int value = credentials.getValue();
+        String description = credentials.getDescription();
+        LocalDate date = LocalDate.parse(credentials.getDate());
+        
+        repository.updateTransaction(id, date, description, name, value);
+        
+        return new ResponseEntity<>("Budget was updated", HttpStatus.OK);
     }
 
 
@@ -149,11 +136,17 @@ public class TransactionController {
         Optional<Transaction> opt = repository.findById(id);
 
         if (opt.isPresent()) {
-            repository.delete(opt.get());
+            Transaction transaction = opt.get();
+            repository.delete(transaction);
             response = new ResponseEntity<>("Transaction was removed", HttpStatus.OK);
         } else {
             response = new ResponseEntity<>("Transaction was not found", HttpStatus.NOT_FOUND);
         }
         return response;
+    }
+
+    @GetMapping("/transactions/budgetTransactionDates/{id}")
+    public Iterable<String> getDates(@PathVariable long id) {
+        return repository.getTransactionsDatesByBudgetIdOrderByDateAsc(id);
     }
 }

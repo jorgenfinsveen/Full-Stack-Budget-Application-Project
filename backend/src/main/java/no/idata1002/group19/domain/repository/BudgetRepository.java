@@ -1,7 +1,12 @@
 package no.idata1002.group19.domain.repository;
 
+import java.time.LocalDate;
+
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.transaction.annotation.Transactional;
 
 import no.idata1002.group19.domain.entity.Budget;
 
@@ -24,7 +29,8 @@ public interface BudgetRepository extends CrudRepository<Budget, Long>{
 //
 //    List<Budget> findByEnddate(@Param("enddate") LocalDateTime enddate);
 //
-//    @Modifying
-//    @Query("update budget b set b.bid = ?1, b.startDate = ?2, b.endDate = ?3, b.boundary = ?4 where b.bid = ?1")
-//   void updateBudget(long bid, LocalDate startdate, LocalDate enddate, int boundary);
+    @Transactional
+    @Modifying
+    @Query(value = "update budget b set b.start_date = ?2, b.end_date = ?3, b.boundary = ?4 where b.bid = ?1",  nativeQuery = true )
+    void updateBudget(long bid, LocalDate startdate, LocalDate enddate, int boundary);
 }

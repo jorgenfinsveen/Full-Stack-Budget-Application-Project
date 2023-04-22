@@ -50,7 +50,7 @@ public class JwtService {
             user = Jwts.parserBuilder()
                 .setSigningKey(key)
                 .build()
-                .parseClaimsJws(token.replace(PREFIX, ""))
+                .parseClaimsJws(token.replace(PREFIX + " ", ""))
                 .getBody()
                 .getSubject();
         }

@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,6 +34,8 @@ public class UserController {
 
     @Autowired
     private BudgetRepository budgetRepository;
+
+    private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
 
     /**
@@ -72,7 +75,7 @@ public class UserController {
      * @param user - the User object representing the user to add.
      * @return ResponseEntity - an HTTP response indicating whether the user was added successfully.
      */
-    @PostMapping("/users/add")
+    @PostMapping("/users")
     public ResponseEntity<?> addUser(@RequestBody UserCredentials credentials) {
         Budget budget = new Budget(  
             LocalDate.of(2023, 4, 18),
@@ -80,10 +83,12 @@ public class UserController {
             10000
         );
 
+        budgetRepository.save(budget);
+
         User user = new User(
             credentials.getUsername(),
-            credentials.getPassword(),
-            credentials.getRole(),
+            bCryptPasswordEncoder.encode(credentials.getPassword()),
+            "USER",
             budget
         );
         repository.save(user);

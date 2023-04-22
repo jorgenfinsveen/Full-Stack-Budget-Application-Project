@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import no.idata1002.group19.domain.entity.Budget;
@@ -27,6 +28,7 @@ import no.idata1002.group19.domain.repository.BudgetRepository;
  * @version 16.04.2023
  */
 @RestController
+@RequestMapping("/budgets")
 public class BudgetController {
 
     @Autowired
@@ -37,7 +39,7 @@ public class BudgetController {
      *
      * @return ResponseEntity<List<Budget>> - an HTTP response containing a list of all budgets
      */
-    @GetMapping("/budgets")
+    @GetMapping("")
     public Iterable<Budget> getBudgets() {
         return repository.findAll();
     }
@@ -49,7 +51,7 @@ public class BudgetController {
      * @param budget - the budget object representing the budget to add.
      * @return ResponseEntity - an HTTP response indicating whether the budget was added successfully.
      */
-    @PostMapping("/budgets")
+    @PostMapping("")
     public ResponseEntity<?> addBudget(@RequestBody BudgetCredentials credentials) {
         Budget budget = new Budget(
             LocalDate.parse(credentials.getStartDate()),
@@ -69,22 +71,14 @@ public class BudgetController {
      * @return ResponseEntity - an HTTP response indicating whether the budget was updated successfully.
 
      */
-    @PutMapping("/budgets/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<String> update(@PathVariable long id, @RequestBody BudgetCredentials credentials) {
         ResponseEntity<String> response;
-        Optional<Budget> opt = repository.findById(id);
-
-        if (opt.isPresent()) {
-            Budget tuple = opt.get();
-            repository.delete(tuple);
-            tuple.setStartDate(LocalDate.parse(credentials.getStartDate()));
-            tuple.setEndDate(LocalDate.parse(credentials.getEndDate()));
-            tuple.setBoundary(credentials.getBoundary());
-            repository.save(tuple);
-            response = new ResponseEntity<>("Budget was updated", HttpStatus.OK);
-        } else {
-            response = new ResponseEntity<>("Budget was not found.", HttpStatus.NOT_FOUND);
-        }
+        LocalDate start = LocalDate.parse(credentials.getStartDate());
+        LocalDate end = LocalDate.parse(credentials.getEndDate());
+        int bound = credentials.getBoundary();
+        repository.updateBudget(id, start, end, bound);
+        response = new ResponseEntity<>("Budget was updated", HttpStatus.OK);
         return response;
     }
 
@@ -94,7 +88,7 @@ public class BudgetController {
      * @param id - the ID of the budget to delete.
      * @return ResponseEntity - an HTTP response indicating whether the budget was deleted successfully.
      */
-    @DeleteMapping("/budgets/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable long id) {
         ResponseEntity<String> response;
         Optional<Budget> opt = repository.findById(id);

@@ -2,7 +2,6 @@ package no.idata1002.group19.domain.entity;
 
 import java.time.LocalDate;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -17,8 +16,8 @@ import jakarta.validation.constraints.NotNull;
 /**
  * This class represent Transaction entity.
  *
- * @author  Group19
- * @since   16.04.2023
+ * @author Group19
+ * @since 16.04.2023
  * @version 16.04.2023
  */
 @Entity
@@ -46,17 +45,17 @@ public class Transaction {
     @Column(name = "date", nullable = false)
     private LocalDate date;
 
-    @OneToOne(fetch=FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "budget_id", referencedColumnName = "bid")
     private Budget budget;
 
     /**
      * Default constructor for Transaction.
      *
-     * @param tname the name of the transaction.
-     * @param value the value of the transaction.
+     * @param tname       the name of the transaction.
+     * @param value       the value of the transaction.
      * @param description description of the transaction.
-     * @param date the date of the transaction.
+     * @param date        the date of the transaction.
      */
     public Transaction(String tname, int value, String description, LocalDate date, Budget budget) {
         super();
@@ -70,17 +69,18 @@ public class Transaction {
     /**
      * Empty constructor that is needed for JPA
      */
-    public Transaction() {}
+    public Transaction() {
+    }
 
     /**
      * Checks if the string is valid
      *
-     * @param string the string you want to check.
+     * @param string  the string you want to check.
      * @param prefiks name of the string.
      * @return if the string is correct it returns the string
      */
     private String stringChecker(String string, String prefiks) {
-        if(string == null || string.trim().isEmpty()) {
+        if (string == null || string.trim().isEmpty()) {
             throw new IllegalArgumentException("The string " + "'" + prefiks + "'" + " cant be empty or null");
         }
         return string;
@@ -88,6 +88,7 @@ public class Transaction {
 
     /**
      * Returns the id of transaction.
+     * 
      * @return tid.
      */
     public long getTid() {
@@ -96,6 +97,7 @@ public class Transaction {
 
     /**
      * Returns the name of the transaction.
+     * 
      * @return tname.
      */
     public String getTname() {
@@ -104,6 +106,7 @@ public class Transaction {
 
     /**
      * Returns the value of the transaction.
+     * 
      * @return value.
      */
     public int getValue() {
@@ -112,6 +115,7 @@ public class Transaction {
 
     /**
      * Returns the description of the transaction.
+     * 
      * @return transaction.
      */
     public String getDescription() {
@@ -120,6 +124,7 @@ public class Transaction {
 
     /**
      * Returns the date of the transaction.
+     * 
      * @return date.
      */
     public LocalDate getDate() {
@@ -128,6 +133,7 @@ public class Transaction {
 
     /**
      * Setts the id of the transaction.
+     * 
      * @param tid the id you want for transaction.
      */
     public void setTid(long tid) {
@@ -136,6 +142,7 @@ public class Transaction {
 
     /**
      * Setts the name fo the transaction.
+     * 
      * @param tname the name you want for transaction.
      */
     public void setTname(String tname) {
@@ -144,6 +151,7 @@ public class Transaction {
 
     /**
      * Setts the value of the transaction.
+     * 
      * @param value the vale you want for transaction.
      */
     public void setValue(int value) {
@@ -152,6 +160,7 @@ public class Transaction {
 
     /**
      * Setts the description of the transaction.
+     * 
      * @param description the description you want for transaction.
      */
     public void setDescription(String description) {
@@ -160,6 +169,7 @@ public class Transaction {
 
     /**
      * Setts the date of the transaction.
+     * 
      * @param date the date you want for transaction.
      */
     public void setDate(LocalDate date) {
@@ -176,6 +186,7 @@ public class Transaction {
 
     /**
      * Checks if the transaction is valid.
+     * 
      * @return boolean statement. True if valid, false if not.
      */
     public boolean isValid() {

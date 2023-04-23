@@ -39,7 +39,6 @@ public class JwtService {
 			  .compact();
   	}
 
-
 	// Get a token from request Authorization header,
     // parse a token and get username
 	public String getAuthUser(HttpServletRequest request) {

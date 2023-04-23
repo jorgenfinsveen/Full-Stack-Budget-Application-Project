@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
 import no.idata1002.group19.domain.entity.Budget;
 import no.idata1002.group19.domain.entity.User;
 import no.idata1002.group19.domain.entity.UserCredentials;
@@ -25,6 +24,9 @@ import no.idata1002.group19.domain.repository.UserRepository;
  * Controller class for user.
  * Controls the endpoints for user.
  *
+ * @author Group19
+ * @since 16.04.2023
+ * @version 16.04.2023
  */
 @RestController
 public class UserController {
@@ -37,17 +39,17 @@ public class UserController {
 
     private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 
-
     /**
-     * Retrieves a list of all users from the UserService and returns them as an HTTP response.
+     * Retrieves a list of all users from the UserService and returns them as an
+     * HTTP response.
      *
-     * @return ResponseEntity<List<User>> - an HTTP response containing a list of all users
+     * @return ResponseEntity<List<User>> - an HTTP response containing a list of
+     *         all users
      */
     @GetMapping("/users")
     public Iterable<User> getUsers() {
         return repository.findAll();
     }
-
 
     /**
      * Retrieves a user from userRepository and returns them as an HTTP response
@@ -68,41 +70,42 @@ public class UserController {
         return response;
     }
 
-
     /**
-     * Adds a new user to the system using the UserService and returns an appropriate HTTP response.
+     * Adds a new user to the system using the UserService and returns an
+     * appropriate HTTP response.
      *
      * @param user - the User object representing the user to add.
-     * @return ResponseEntity - an HTTP response indicating whether the user was added successfully.
+     * @return ResponseEntity - an HTTP response indicating whether the user was
+     *         added successfully.
      */
     @PostMapping("/users")
     public ResponseEntity<?> addUser(@RequestBody UserCredentials credentials) {
-        Budget budget = new Budget(  
-            LocalDate.of(2023, 4, 18),
-            LocalDate.of(2023, 8, 19),
-            10000
-        );
+        Budget budget = new Budget(
+                LocalDate.of(2023, 4, 18),
+                LocalDate.of(2023, 8, 19),
+                10000);
 
         budgetRepository.save(budget);
 
         User user = new User(
-            credentials.getUsername(),
-            bCryptPasswordEncoder.encode(credentials.getPassword()),
-            "USER",
-            budget
-        );
+                credentials.getUsername(),
+                bCryptPasswordEncoder.encode(credentials.getPassword()),
+                "USER",
+                budget);
         repository.save(user);
 
         return new ResponseEntity<>("User was added", HttpStatus.CREATED);
     }
 
     /**
-     * Updates a user with the specified ID using the UserService and returns an appropriate HTTP response.
+     * Updates a user with the specified ID using the UserService and returns an
+     * appropriate HTTP response.
      *
-     * @param id - the ID of the user to update.
+     * @param id   - the ID of the user to update.
      * @param user - the User object representing the updated user.
-     * @return ResponseEntity - an HTTP response indicating whether the user was updated successfully.
-
+     * @return ResponseEntity - an HTTP response indicating whether the user was
+     *         updated successfully.
+     * 
      */
     @PutMapping("/users/{id}")
     public ResponseEntity<?> update(@PathVariable long id, @RequestBody UserCredentials credentials) {
@@ -129,9 +132,12 @@ public class UserController {
     }
 
     /**
-     * Deletes a user with the specified ID using the UserService and returns an appropriate HTTP response.
+     * Deletes a user with the specified ID using the UserService and returns an
+     * appropriate HTTP response.
+     * 
      * @param id - the ID of the user to delete.
-     * @return ResponseEntity - an HTTP response indicating whether the user was deleted successfully.
+     * @return ResponseEntity - an HTTP response indicating whether the user was
+     *         deleted successfully.
      */
     @DeleteMapping("/users/{id}")
     public ResponseEntity<?> delete(@PathVariable long id) {

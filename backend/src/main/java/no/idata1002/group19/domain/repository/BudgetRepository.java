@@ -1,18 +1,16 @@
 package no.idata1002.group19.domain.repository;
 
 import java.time.LocalDate;
-
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.transaction.annotation.Transactional;
-
 import no.idata1002.group19.domain.entity.Budget;
 
 /**
- * Represents an interface for Budget Repository, that
- * extends to CrudRepository.
+ * A repository for the Budget entity and extends the CrudRepository.
+ * It provides methods to update Budget's start date, end date, and boundary.
  * 
  * @author  Group19
  * @since   16.04.2023
@@ -20,15 +18,15 @@ import no.idata1002.group19.domain.entity.Budget;
  */
 @RepositoryRestResource
 public interface BudgetRepository extends CrudRepository<Budget, Long>{
-    
-//    Optional<Budget> findByBid(@Param("bid") long bid);
-//
-//    List<Budget> findByUser(@Param("user") User user);
-//
-//    List<Budget> findByStartdate(@Param("startdate") LocalDateTime startdate);
-//
-//    List<Budget> findByEnddate(@Param("enddate") LocalDateTime enddate);
-//
+
+    /**
+     * Updates a Budget's start date, end date, and boundary based on its ID.
+     * 
+     * @param bid       the ID of the Budget to be updated
+     * @param startdate the new start date for the Budget
+     * @param enddate   the new end date for the Budget
+     * @param boundary  the new boundary for the Budget
+     */
     @Transactional
     @Modifying
     @Query(value = "update budget b set b.start_date = ?2, b.end_date = ?3, b.boundary = ?4 where b.bid = ?1",  nativeQuery = true )

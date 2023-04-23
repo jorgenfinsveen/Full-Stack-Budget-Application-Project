@@ -1,7 +1,6 @@
 package no.idata1002.group19;
 
 import java.net.InetAddress;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +32,6 @@ public class BudgetingApp implements CommandLineRunner {
 	/** Logger element for logging application events to STDOUT. */
 	private static final Logger LOG = LoggerFactory.getLogger(BudgetingApp.class);
 
-
 	/**
 	 * Main method which is called upon application startup.
 	 * 
@@ -46,7 +44,6 @@ public class BudgetingApp implements CommandLineRunner {
 		/* Start the Spring application. */
 		SpringApplication.run(BudgetingApp.class, args);
 	}
-
 
 	/**
 	 * Initializing method inherited from the CommandLineRunner interface.

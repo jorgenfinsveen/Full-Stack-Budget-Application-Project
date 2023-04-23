@@ -8,7 +8,7 @@ import { ActiveLink } from "./ActiveLink";
 export function NavBar(props) {
 
     const handleLogout = () => {
-        window.location.replace("http://localhost:3001/login");
+        window.location.replace("/login");
     }
 
     const disabledUl = (

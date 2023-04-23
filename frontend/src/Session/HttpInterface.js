@@ -1,5 +1,17 @@
-import { SESSION, BUDGET, EXPENSES, INCOMES, Transaction } from './Session';
 import * as CONFIG from '../config';
+import { 
+    SESSION, 
+    BUDGET, 
+    EXPENSES, 
+    INCOMES, 
+    Transaction 
+} from './Session';
+
+
+/** URL of the server which delivers the API. */
+const SERVER_URL = "http://localhost:8090";
+
+
 
 /**
  * __HTTP Interface__
@@ -14,20 +26,17 @@ import * as CONFIG from '../config';
  * @version 17.04.2023
  * @author  Group 19
  */
-const HttpInterface = {
-    /** URL of the server which delivers the API. */
-    SERVER_URL: "http://localhost:8090",
-
+export const HttpInterface = {
 
     /**
-     * Requests the budget instance which belongs
+     * Fetches the budget instance which belongs
      * to a given user.
-     *
-     * @return representation of the user's budget.
+     * 
+     * @param {Number} bid The ID of the Budget.
      */
     fetchBudget: async function (bid) {
 
-        await fetch(this.SERVER_URL + "/api/budgets/" + bid,
+        await fetch(SERVER_URL + "/api/budgets/" + bid,
         {
             method: 'GET',
             headers: { 
@@ -62,14 +71,15 @@ const HttpInterface = {
         this.fetchAllIncomes();
     },
 
+
+
     /**
-     * Requests all transactions labeled as an
-     * expense to the given budget.
-     *
-     * @return collection of expense-labeled transactions.
+     * Fetches all transactions labeled as an expense to the given budget. 
+     * The /GET request is forwarded to {@link SERVER_URL}, which is where
+     * the RESTful services are implemented in the back-end.
      */
     fetchAllExpenses: function () {
-        fetch(this.SERVER_URL + "/transactions/expensesById/" + BUDGET.getBudgetId(),
+        fetch(SERVER_URL + "/transactions/expensesById/" + BUDGET.getBudgetId(),
         {
             method: 'GET',
             headers: { 
@@ -102,48 +112,69 @@ const HttpInterface = {
         .catch(err => console.error(err));
     },
 
-    fetchAllExpenses2: async function () {
-       
-        const result = await fetch("http://127.0.0.1:8090/api/transactions/search/getExpensesByBudgetIdOrderByDateAsc?budgetId=" + BUDGET.getBudgetId(),
-        {
-            method: 'GET',
-            headers: { 
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + SESSION.getJwt()
-            }
-        })
-        .then(response => response.json())
-        .then(data => {return data._embedded.transactions})
-        .catch(err => console.error(err));
 
-        return result;
-    },
-
-    fetchAllIncomes2: async function () {
-       
-        const result = await fetch("http://127.0.0.1:8090/api/transactions/search/getIncomesByBudgetIdOrderByDateAsc?budgetId=" + BUDGET.getBudgetId(),
-        {
-            method: 'GET',
-            headers: { 
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + SESSION.getJwt()
-            }
-        })
-        .then(response => response.json())
-        .then(data => {return data._embedded.transactions})
-        .catch(err => console.error(err));
-
-        return result;
-    },
 
     /**
-     * Requests all transactions labeled as an
-     * income to the given budget.
-     *
-     * @return collection of income-labeled transactions.
+     * Fetches all expenses associated to the budget in 
+     * ascending order by date. The /GET request is forwarded
+     * to the /api endpoint, which will return each expense
+     * along with the href attribute for each transaction.
+     */
+    fetchAllExpenses2: async function () {
+
+        const link = SERVER_URL + "/api/transactions/search/getExpensesByBudgetIdOrderByDateAsc?budgetId=";
+       
+        const result = await fetch(link + BUDGET.getBudgetId(),
+        {
+            method: 'GET',
+            headers: { 
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + SESSION.getJwt()
+            }
+        })
+        .then(response => response.json())
+        .then(data => {return data._embedded.transactions})
+        .catch(err => console.error(err));
+
+        return result;
+    },
+
+
+
+    /**
+     * Fetches all income associated to the budget in 
+     * ascending order by date. The /GET request is forwarded
+     * to the /api endpoint, which will return each expense
+     * along with the href attribute for each transaction.
+     */
+    fetchAllIncomes2: async function () {
+
+        const link = SERVER_URL + "/api/transactions/search/getIncomesByBudgetIdOrderByDateAsc?budgetId=";
+       
+        const result = await fetch(link + BUDGET.getBudgetId(),
+        {
+            method: 'GET',
+            headers: { 
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + SESSION.getJwt()
+            }
+        })
+        .then(response => response.json())
+        .then(data => {return data._embedded.transactions})
+        .catch(err => console.error(err));
+
+        return result;
+    },
+
+
+
+    /**
+     * Fetches all transactions labeled as an income to the given budget. 
+     * The /GET request is forwarded to {@link SERVER_URL}, which is where
+     * the RESTful services are implemented in the back-end.
      */
     fetchAllIncomes: function () {
-        fetch(this.SERVER_URL + "/transactions/incomesById/" + BUDGET.getBudgetId(),
+        fetch(SERVER_URL + "/transactions/incomesById/" + BUDGET.getBudgetId(),
         {
             method: 'GET',
             headers: { 
@@ -176,10 +207,15 @@ const HttpInterface = {
         .catch(err => console.error(err));
     },
 
-    fetchTransactionDates: async function() {
 
-        let arr = [];
-        const result = await fetch(this.SERVER_URL + "/transactions/budgetTransactionDates/" + BUDGET.getBudgetId(),
+
+    /**
+     * Fetches the transaction dates from the back-end implementation. The response
+     * is a list which contains string representations of all the dates which a 
+     * transaction, either income or expense, has been made in the given budget in ascending order.
+     */
+    fetchTransactionDates: async function() {
+        const result = await fetch(SERVER_URL + "/transactions/budgetTransactionDates/" + BUDGET.getBudgetId(),
         {
             method: 'GET',
             headers: { 
@@ -194,44 +230,15 @@ const HttpInterface = {
         return result;
     },
 
-    /**
-     * Requests all transactions labeled as an
-     * expense to the given budget at a certain date.
-     *
-     * @return collection of expense-labeled transactions.
-     */
-    fetchExpensesAt: function () {
-        fetch(this.SERVER_URL + "/budget/{id}/expenses/{date}")
-            .then((response) => response.json())
-            .then()
-            .catch((err) => console.error(err));
-
-        return null;
-    },
-
-    /**
-     * Requests all transactions labeled as an
-     * income to the given budget at a certain date.
-     *
-     * @return collection of income-labeled transactions.
-     */
-    fetchIncomesAt: function () {
-        fetch(this.SERVER_URL + "/budget/{id}/incomes/{date}")
-            .then((response) => response.json())
-            .then()
-            .catch((err) => console.error(err));
-
-        return null;
-    },
 
 
     /**
      * Adds a new transaction categorized to the given budget.
-     *
-     * @return `true` if transaction was added successfully.
+     * The /POST request is forwarded to the server, which uploads
+     * the new transaction to the database.
      */
     addTransaction: async function (trans) {
-        const result = await fetch(this.SERVER_URL + "/transactions",
+        const result = await fetch(SERVER_URL + "/transactions",
         {
             method: 'POST',
             headers: { 
@@ -248,13 +255,16 @@ const HttpInterface = {
         .catch(err => window.alert(err));
     },
 
+
+
     /**
      * Updates an existing transaction to the given budget.
+     * The /PUT
      *
      * @return `true` if transaction was updated successfully.
      */
     updateTransaction: async function (id, newTransaction) {
-        const result = await fetch(this.SERVER_URL + "/transactions/" + id,
+        const result = await fetch(SERVER_URL + "/transactions/" + id,
         {
             method: 'PUT',
             headers: { 
@@ -272,13 +282,14 @@ const HttpInterface = {
     },
 
 
+
     /**
      * Removes a given transaction from the budget.
      *
      * @return `true` if transaction was removed successfully.
      */
     deleteTransaction: async function (id) {
-        const result = await fetch(this.SERVER_URL + "/transactions/" + id,
+        const result = await fetch(SERVER_URL + "/transactions/" + id,
         {
             method: 'DELETE',
             headers: { 
@@ -294,6 +305,8 @@ const HttpInterface = {
         .catch(err => window.alert(err));
     },
 
+
+
     /**
      * Updates the properties of the given budget.
      *
@@ -307,7 +320,7 @@ const HttpInterface = {
             boundary: Number(BUDGET.boundary)
         }
 
-        const result = await fetch(this.SERVER_URL + "/budgets/" + BUDGET.getBudgetId(),
+        const result = await fetch(SERVER_URL + "/budgets/" + BUDGET.getBudgetId(),
         {
             method: 'PUT',
             headers: { 
@@ -331,6 +344,8 @@ const HttpInterface = {
         .catch(err => window.alert(err));
     },
 
+
+
     /**
      * Authenticates a session and validates the login-
      * credentials provided by the user.
@@ -344,7 +359,7 @@ const HttpInterface = {
         
        
         let response = "";
-        response = await fetch(this.SERVER_URL + '/login',
+        response = await fetch(SERVER_URL + '/login',
             {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -370,6 +385,8 @@ const HttpInterface = {
         return authenticated;
     },
 
+
+
     /**
      * Registers a new user with the credentials
      * provided by the user.
@@ -380,7 +397,7 @@ const HttpInterface = {
         const username = credentials.username;
         const password = credentials.password;
 
-        const result = await fetch(this.SERVER_URL + "/users",
+        const result = await fetch(SERVER_URL + "/users",
         {
             method: 'POST',
             headers: { 
@@ -405,5 +422,3 @@ const HttpInterface = {
         return result;
     },
 };
-
-export { HttpInterface };

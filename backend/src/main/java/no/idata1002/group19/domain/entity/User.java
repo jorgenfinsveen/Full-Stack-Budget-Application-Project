@@ -13,8 +13,8 @@ import jakarta.persistence.Table;
 /**
  * Represent user entity.
  *
- * @author  Group19
- * @since   16.04.2023
+ * @author Group19
+ * @since 16.04.2023
  * @version 16.04.2023
  */
 @Entity
@@ -39,12 +39,11 @@ public class User {
     @JoinColumn(name = "bid")
     private Budget budget;
 
-
     /**
      * Default contractor for user.
      *
      * @param userName the name of the user.
-     * @param pass the password for the user.
+     * @param pass     the password for the user.
      */
     public User(String username, String password, String role, Budget budget) {
         super();
@@ -57,7 +56,7 @@ public class User {
     /**
      * Checks if the string is valid
      *
-     * @param string the string you want to check.
+     * @param string  the string you want to check.
      * @param prefiks name of the string.
      * @return if the string is correct it returns the string
      */
@@ -71,10 +70,12 @@ public class User {
     /**
      * Empty constructor that is needed for JPA
      */
-    public User() {}
+    public User() {
+    }
 
     /**
      * Returns the user id.
+     * 
      * @return uid
      */
     public Long getId() {
@@ -83,6 +84,7 @@ public class User {
 
     /**
      * Returns user name
+     * 
      * @return userName
      */
     public String getUsername() {
@@ -91,6 +93,7 @@ public class User {
 
     /**
      * Returns password.
+     * 
      * @return pass.
      */
     public String getPassword() {
@@ -99,6 +102,7 @@ public class User {
 
     /**
      * Setts the user id
+     * 
      * @param uid the id of the user that you want.
      */
     public void setId(Long uid) {
@@ -107,6 +111,7 @@ public class User {
 
     /**
      * Setts the username.
+     * 
      * @param userName the name of the user that you want.
      */
     public void setUsername(String username) {
@@ -115,6 +120,7 @@ public class User {
 
     /**
      * Setts the password for the user.
+     * 
      * @param pass the password of the user that you want.
      */
     public void setPassword(String password) {
@@ -123,6 +129,7 @@ public class User {
 
     /**
      * Return role
+     * 
      * @return role
      */
     public String getRole() {
@@ -131,6 +138,7 @@ public class User {
 
     /**
      * Setts the role of the user
+     * 
      * @param role the role of the user.
      */
     public void setRole(String role) {
@@ -139,6 +147,7 @@ public class User {
 
     /**
      * Return budget
+     * 
      * @return budget
      */
     public Budget getBudget() {
@@ -147,6 +156,7 @@ public class User {
 
     /**
      * Setts budget
+     * 
      * @param budget budget
      */
     public void setBudget(Budget budget) {

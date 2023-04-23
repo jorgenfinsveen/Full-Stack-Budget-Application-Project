@@ -31,7 +31,7 @@ import {
 export function DashBoard() {
 
     /** String representation of the given date. */
-    const [strDate, setStrDate] = useState('2023-04-18');
+    const [strDate, setStrDate] = useState('2023-02-10');
 
 
     /* Dayjs Date representation of the given date. */

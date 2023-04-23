@@ -115,7 +115,7 @@ article {
 }
 
 #status-container-label {
-    padding-left: 0rem;
+    padding-left: 1rem;
 }
 
 #status-container {
@@ -145,10 +145,12 @@ article {
 
 #total-income {
     color: green;
+    padding-left: 1rem;
 }
 
 #total-expense {
     color: red;
+    padding-left: 1rem;
 }
 
 #net-worth {
@@ -157,10 +159,12 @@ article {
 
 #budget-spendings {
     color: black;
+    padding-left: 1rem;
 }
 
 #margin {
     color: green;
+    margin-left: 1rem;
 }
 
 .red {
@@ -186,3 +190,25 @@ table {
 #income-container-label {
     padding-left: 0rem;
 }
+
+#budget-date-range-container {
+    width: 50rem;
+    margin-left: -12rem;
+}
+
+#start-date-container {
+    display: inline-block;
+    margin-right: 2rem;
+}
+
+#date-range-divider {
+    margin-top: -2rem;
+    margin-left: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+#end-date-container {
+    display: inline-block;
+    margin-left: 2rem;
+}
+

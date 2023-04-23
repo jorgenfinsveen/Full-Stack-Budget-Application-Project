@@ -7,10 +7,11 @@ import AddTransaction from './Transaction/AddTransaction';
 import Button from '@mui/material/Button';
 import React, { useEffect, useState } from 'react';
 import { Slider } from '../../Components/Slider';
-import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowRightLong } from '@fortawesome/free-solid-svg-icons';
 import { HttpInterface } from '../../Session/HttpInterface';
 import { BUDGET, SESSION, EXPENSES, INCOMES } from '../../Session/Session';
 import { DataGrid, GridToolbarContainer, GridToolbarExport, gridClasses } from '@mui/x-data-grid';
@@ -123,11 +124,11 @@ export function Budget() {
     /** Sum of all expense transactions. */
     const [totalExpense, setTotalExpense] = useState();
 
-    /** Start- and end-date of the budget. */
-    const [budgetDates, setBudgetDates] = useState([
-        dayjs('2023-03-22'), 
-        dayjs('2023-05-16')
-    ]);
+    /** Start-date of the budget. */
+    const [budgetStartDate, setBudgetStartDate] = useState('2023-03-22');
+
+    /** Start-date of the budget. */
+    const [budgetEndDate, setBudgetEndDate] = useState('2023-03-22');
 
 
 
@@ -250,6 +251,7 @@ export function Budget() {
     };
 
 
+
     /**
      * Deletes a given transaction by having the HTTP Interface send a /DELETE
      * request to the server.
@@ -280,8 +282,8 @@ export function Budget() {
      * to the server.
      */
     const handleApply = () => {
-        BUDGET.setStartDate(budgetDates[0].format('YYYY-MM-DD'));
-        BUDGET.setEndDate(budgetDates[1].format('YYYY-MM-DD'));
+        BUDGET.setStartDate(budgetStartDate.format('YYYY-MM-DD'));
+        BUDGET.setEndDate(budgetEndDate.format('YYYY-MM-DD'));
         HttpInterface.updateBudget();
     };
 
@@ -316,10 +318,37 @@ export function Budget() {
      * Updates the start- and ending-date of the budget.
      */
     const updateBudgetDates = () => {
-        let start = BUDGET.startDate;
-        let end = BUDGET.endDate;
-        setBudgetDates([dayjs(start), dayjs(end)]);
+        let start = BUDGET.getStartDate();
+        let end = BUDGET.getEndDate();
+        setBudgetStartDate(dayjs(start));
+        setBudgetEndDate(dayjs(end));
     };
+
+
+
+    /**
+     * Activates upon changing the date in the DatePicker
+     * for budget start-date.
+     * 
+     * @param {String} value The new date in YYYY-MM-DD format.
+     */
+    const updateBudgetStartDate = (value) => {
+        BUDGET.setStartDate(value);
+        setBudgetStartDate(value);
+    }
+
+
+
+    /**
+     * Activates upon changing the date in the DatePicker
+     * for budget end-date.
+     * 
+     * @param {String} value The new date in YYYY-MM-DD format.
+     */
+    const updateBudgetEndDate = (value) => {
+        BUDGET.setEndDate(value);
+        setBudgetEndDate(value);
+    }
 
 
 
@@ -413,17 +442,35 @@ export function Budget() {
                 </Button>
                 <br/>
                 <br/>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DemoContainer components={['DateRangePicker', 'DateRangePicker']}>
-                        <DemoItem label="" component="DateRangePicker">
-                            <DateRangePicker
-                                value={budgetDates}
-                                onChange={(budgetDates) => setBudgetDates(budgetDates)}
+                <div id="budget-date-range-container">
+                    <div id="start-date-container">
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <DatePicker
+                                name = "Start"
+                                label = "Start"
+                                value = {dayjs(budgetStartDate)}
+                                onChange = {(value) => updateBudgetStartDate(value.format('YYYY-MM-DD'))}
+                                maxDate = {budgetEndDate}
                             />
-                        </DemoItem>      
-                    </DemoContainer>
-                </LocalizationProvider>
+                        </LocalizationProvider>
+                    </div>
+
+                    <div id="end-date-container">
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <DatePicker
+                                name = "End"
+                                label = "End"
+                                value = {dayjs(budgetEndDate)}
+                                onChange = {(value) => updateBudgetEndDate(value.format('YYYY-MM-DD'))}
+                                minDate = {budgetStartDate}
+                            />
+                        </LocalizationProvider>
+                    </div>
+                </div>
             </div>
+            <div id="date-range-divider">
+                    <FontAwesomeIcon icon={faArrowRightLong} id="arrow"/>
+                </div>
             <div id="status-container">
                 <h2 id="status-container-label">Staus</h2>
                 <p>Total income: <i id="total-income"> KR {totalIncome}</i></p>
@@ -435,6 +482,13 @@ export function Budget() {
     );
 }
 
+
+
+
+/**
+ * Customized ToolBar component for the DataGrid components which
+ * displays the transactions.
+ */
 function CustomToolbar() {
     return (
         <GridToolbarContainer

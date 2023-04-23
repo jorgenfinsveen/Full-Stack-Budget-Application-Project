@@ -97,6 +97,22 @@ function EditTransaction(props) {
 
 
 
+    /**
+     * Activates upon changes in the DatePicker component.
+     * Updates the transaction date variable with the value
+     * read from the DatePicker input on the YYYY-MM-DD format.
+     * 
+     * @param value The date which are picked in the DatePicker component.
+     */
+    const handleDateChange = (value) => {
+        value = value.format('YYYY-MM-DD');
+        setTransaction({
+            ...transaction,
+            ['date']: value
+        });
+    };
+
+
     
     return (
         <div>
@@ -126,7 +142,7 @@ function EditTransaction(props) {
                             <DatePicker        
                                 name = "date"
                                 defaultValue={dayjs(transaction.date)}
-                                value={dayjs(transaction.date)}
+                                onChange={(value) => handleDateChange(value)}
                             />
                         </LocalizationProvider>
                     </Stack>

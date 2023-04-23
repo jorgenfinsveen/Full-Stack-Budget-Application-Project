@@ -22,9 +22,30 @@ ChartJS.register(
   Legend
 );
 
+/**
+ * LineChart component imported from ChartJS. It is used
+ * to display all transactions associated with the given 
+ * budget.
+ * 
+ * @param props.incomes  {Array} Income values represented by integers.
+ * @param props.expenses {Array} Expense values represented by integers.
+ * @param props.labels   {Array} Labels to be displayed represented by strings.
+ * @see https://react-chartjs-2.js.org/examples/line-chart/
+ */
 export function LineChart(props) {
 
+  /** 
+   * Default array containing a single empty string to be displayed as labels
+   * in the diagram.
+   */
   const labels = [''];
+
+
+  /**
+   * The dataset which is being used for displaying the lines in the diagram.
+   * It is supervised by the useState-hook, which ensures that the data is
+   * updateable upon changes of the transactions, or the labels which it displays.
+   */
   const [lines, setLines] = useState(
     {
       labels,
@@ -46,6 +67,15 @@ export function LineChart(props) {
   );
   
 
+  
+  /**
+   * Returns an updated version of the dataset which are to be stored
+   * in the hooked lines variable.
+   * 
+   * @param incomes  An array of income values represented as integers.
+   * @param expenses An array of expense values represented as integers.
+   * @param labels   An array of labels to be displayed represented by strings.
+   */
   const getData = (labels, incomes, expenses) => {
     return {
       labels,
@@ -67,11 +97,22 @@ export function LineChart(props) {
   };
   
 
+
+  /**
+   * React hook which updates the dataset which are to be displayed
+   * in the LineChart upon changes of any of the values provided as
+   * props to the component.
+   */
   useEffect( () => {
     setLines(getData(props.labels, props.incomes, props.expenses));
   }, [props, props.labels, props.incomes, props.expenses]);
 
 
+
+  /**
+   * Display options which configures the layout and mechanics of
+   * the LineChart.
+   */
   const options = {
     responsive: true,
     interaction: {
@@ -92,6 +133,7 @@ export function LineChart(props) {
       },
     },
   };
+
 
 
   return (

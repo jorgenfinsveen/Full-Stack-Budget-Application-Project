@@ -19,9 +19,30 @@ ChartJS.register(
   Legend
 );
 
+
+/**
+ * BarChart component imported from ChartJS. It is used
+ * to display all transactions associated with the given 
+ * budget.
+ * 
+ * @param props.income  {Array} Income values represented by integers.
+ * @param props.expense {Array} Expense values represented by integers.
+ * @see https://react-chartjs-2.js.org/examples/vertical-bar-chart
+ */
 export function BarChart(props) {
 
+  /** 
+   * The BarChart is not intended to show labels, since there are only two bars
+   * which already are identified by the label-field of their respective datasets.
+   */
   const labels = [''];
+
+
+  /**
+   * The dataset which is being used for displaying the bars in the diagram.
+   * It is supervised by the useState-hook, which ensures that the data is
+   * updateable upon changes of the transactions which it displays.
+   */
   const [bar, setBar] = useState(
     {
       labels,
@@ -40,6 +61,15 @@ export function BarChart(props) {
     }
   );
 
+
+
+  /**
+   * Returns an updated version of the dataset which are to be stored
+   * in the hooked bar variable.
+   * 
+   * @param incomes An array of income values represented as integers.
+   * @param expenses An array of expense values represented as integers.
+   */
   const getData = (incomes, expenses) => {
     return {
       labels,
@@ -59,11 +89,23 @@ export function BarChart(props) {
   };
 
 
+
+  /**
+   * React hook which updates the dataset which are to be displayed
+   * in the BarChart upon changes of any of the values provided as
+   * props to the component.
+   */
   useEffect(() => {
     setBar(getData(props.income, props.expense));
+    // eslint-disable-next-line
   }, [props, props.expense, props.income]);
 
 
+
+  /**
+   * Display options which configures the layout and mechanics of
+   * the BarChart.
+   */
   const options = {
     responsive: true,
     animation: {
@@ -87,6 +129,7 @@ export function BarChart(props) {
     },
   };
   
+
 
   return (
     <Bar 

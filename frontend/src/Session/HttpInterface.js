@@ -253,15 +253,16 @@ export const HttpInterface = {
             } 
         })
         .catch(err => window.alert(err));
+
+        return result;
     },
 
 
 
     /**
      * Updates an existing transaction to the given budget.
-     * The /PUT
-     *
-     * @return `true` if transaction was updated successfully.
+     * The /PUT request is forwarded to the server, which updates the
+     * existing transaction in the database.
      */
     updateTransaction: async function (id, newTransaction) {
         const result = await fetch(SERVER_URL + "/transactions/" + id,
@@ -279,14 +280,16 @@ export const HttpInterface = {
             } 
         })
         .catch(err => window.alert(err));
+
+        return result;
     },
 
 
 
     /**
-     * Removes a given transaction from the budget.
-     *
-     * @return `true` if transaction was removed successfully.
+     * Deletes an existing transaction to the given budget.
+     * The /DELETE request is forwarded to the server, which deletes the
+     * existing transaction in the database.
      */
     deleteTransaction: async function (id) {
         const result = await fetch(SERVER_URL + "/transactions/" + id,
@@ -303,14 +306,16 @@ export const HttpInterface = {
             } 
         })
         .catch(err => window.alert(err));
+
+        return result;
     },
 
 
 
     /**
-     * Updates the properties of the given budget.
-     *
-     * @return `true` if date was updated successfully.
+     * Updates the budget which the user has been provided with.
+     * The /PUT request is forwarded to the server, which updates the
+     * existing budget in the database.
      */
     updateBudget: async function () {
 
@@ -342,24 +347,25 @@ export const HttpInterface = {
             }
         })
         .catch(err => window.alert(err));
+
+        return result;
     },
 
 
 
     /**
      * Authenticates a session and validates the login-
-     * credentials provided by the user.
-     *
-     * @return `true` if user was found.
+     * credentials provided by the user. Upon a succesful
+     * login, the server will respond with a JSON Web Token
+     * for authentication, and the ID of the budget which
+     * is assigned to the given user.
      */
     authenticateLogin: async function (credentials) {
 
         /** True if the user is authenticated. */
         let authenticated = false;
         
-       
-        let response = "";
-        response = await fetch(SERVER_URL + '/login',
+        const response = await fetch(SERVER_URL + '/login',
             {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -382,6 +388,10 @@ export const HttpInterface = {
             })
             .then(authenticated => {return authenticated;})
             .catch(err => console.error(err));
+        
+        if (CONFIG.SHOW_AUTHENTICATION_FAILURE_ALERT) {
+            console.log(response);
+        }
         return authenticated;
     },
 
@@ -389,9 +399,17 @@ export const HttpInterface = {
 
     /**
      * Registers a new user with the credentials
-     * provided by the user.
-     *
-     * @return `true` if sign-up was successful.
+     * provided by the user. The /POST request is
+     * forwarded to the server, which assign a new
+     * Budget instance to the user and upload both
+     * the user and the budget to the database.
+     * 
+     * The password provided is encrypted with a
+     * BCrypt password encoder.
+     * 
+     * If the username is taken, the server will 
+     * respond with an error which will be returned
+     * to the user.
      */
     signUp: async function (credentials) {
         const username = credentials.username;
@@ -415,6 +433,7 @@ export const HttpInterface = {
                 };
         
                 const login = await HttpInterface.authenticateLogin(loginInfo);
+                return login;
             }
         })
         .catch(err => window.alert(err));

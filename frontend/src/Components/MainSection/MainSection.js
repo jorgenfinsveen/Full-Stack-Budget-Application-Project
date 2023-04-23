@@ -7,6 +7,15 @@ import { Login } from "../../Pages/Login/Login";
 import { Register } from "../../Pages/Login/Register";
 import { Navigate } from "react-router-dom";
 
+
+/**
+ * MainSection component responsible for providing the correct 
+ * page-components at the given route paths. The code is inspired
+ * from an example provided by Girts Strazdins at a lecture at NTNU
+ * Ålesund for the course IDATA2301 - Web Technologies.
+ * 
+ * @see https://github.com/ntnu-datakomm/web-examples/tree/main/public_html/examples/react/12-routing
+ */
 export function MainSection() {
   return (
     <main>

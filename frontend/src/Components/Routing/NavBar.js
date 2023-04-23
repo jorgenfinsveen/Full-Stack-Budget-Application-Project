@@ -1,16 +1,37 @@
 import './NavBar.css';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGauge, faCoins, faChartLine, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
-import { SESSION } from '../../Session/Session';
 import { ActiveLink } from "./ActiveLink";
 
+
+/**
+ * React component which represents the navbar in the website. 
+ * It has icons which routes to different pages, and comes in
+ * two different modes.
+ * 
+ * The first mode is a disabled variant which is displayed when
+ * a user is not yet authenticated. The second mode is an enabled
+ * variant which lets an authenticated user maneouver throughout
+ * the website.
+ * 
+ * When it comes to code related to routing, the code is inspired
+ * from an example provided by Girts Strazdins at a lecture at NTNU
+ * Ålesund for the course IDATA2301 - Web Technologies.
+ * 
+ * @see https://github.com/ntnu-datakomm/web-examples/tree/main/public_html/examples/react/12-routing
+ */
 export function NavBar(props) {
 
     const handleLogout = () => {
         window.location.replace("/login");
     }
 
+    /** 
+     * Disabled NavBar which only shows the icons in a black color.
+     * The icons are not clickable and does not route to different
+     * pages.
+     */
     const disabledUl = (
         <ul>
             <li id="li-dashboard">
@@ -28,6 +49,11 @@ export function NavBar(props) {
         </ul>    
     );
 
+
+    /**
+     * Enabled NavBar which shows the icons in a blue color.
+     * The icons are clickable and routes to different pages.
+     */
     const enabledUl = (
         <ul>
                 <li id="li-dashboard">
@@ -54,6 +80,11 @@ export function NavBar(props) {
     );
 
 
+    /*
+     * Returns either the enabled or the disabled variant of the
+     * navbar depending on whether the props.enabled boolean are
+     * set to true or false.
+     */
     return (
         <nav>
             {props.enabled ? enabledUl : disabledUl}

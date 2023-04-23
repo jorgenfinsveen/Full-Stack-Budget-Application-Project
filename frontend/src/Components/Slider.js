@@ -2,8 +2,14 @@ import React from 'react';
 import CircularSlider from '@fseehawer/react-circular-slider';
 import { BUDGET } from '../Session/Session';
 
+/**
+ * Slider component which is imported from fseehawer.
+ * It is used to adjust the upper boundary of budget
+ * spendings.
+ * 
+ * @see https://www.npmjs.com/package/@fseehawer/react-circular-slider"
+ */
 export function Slider() {
-
     return (
         <CircularSlider
             label="KR"
@@ -22,7 +28,11 @@ export function Slider() {
             min={0}
             max={25_000}
             verticalOffset={"2rem"}
-            onChange={ value => { BUDGET.setBoundary(value); } }
+            onChange={ 
+                value => {
+                    BUDGET.setBoundary(value);
+                } 
+            }
         />
     );
 }; 

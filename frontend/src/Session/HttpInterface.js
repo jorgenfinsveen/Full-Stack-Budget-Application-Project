@@ -389,7 +389,7 @@ export const HttpInterface = {
             .then(authenticated => {return authenticated;})
             .catch(err => console.error(err));
         
-        if (CONFIG.SHOW_AUTHENTICATION_FAILURE_ALERT) {
+        if (CONFIG.SHOW_AUTHENTICATION_FAILURE_ALERT && response !== undefined) {
             console.log(response);
         }
         return authenticated;

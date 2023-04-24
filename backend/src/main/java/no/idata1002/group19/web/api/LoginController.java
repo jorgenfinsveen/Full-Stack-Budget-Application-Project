@@ -29,10 +29,10 @@ public class LoginController {
     private JwtService jwtService;
 
     @Autowired
-    AuthenticationManager authenticationManager;
+    private AuthenticationManager authenticationManager;
 
 	@Autowired
-	UserRepository userRepository;
+	private UserRepository userRepository;
 
 	/**
      * Receives an HTTP POST request with the user's credentials and authenticates them. If the

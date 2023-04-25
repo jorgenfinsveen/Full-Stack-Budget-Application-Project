@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,14 +20,16 @@ import no.idata1002.group19.domain.repository.BudgetRepository;
 import no.idata1002.group19.domain.repository.TransactionRepository;
 
 /**
- * Controller class for transaction entity.
- * Controls the endpoints for transaction
+ * Controller class responsible for providing RESTful services
+ * at the /transactions enpoint and its descendant enpoints for
+ * API provision of Transaction instances.
  * 
  * @author Group19
  * @since 16.04.2023
  * @version 16.04.2023
  */
 @RestController
+@CrossOrigin
 public class TransactionController {
 
     @Autowired

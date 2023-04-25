@@ -9,7 +9,7 @@ import {
 
 
 /** URL of the server which delivers the API. */
-const SERVER_URL = "http://localhost:8090";
+const SERVER_URL = "http://group10.web-tek.ninja:8090";
 
 
 
@@ -384,6 +384,7 @@ export const HttpInterface = {
                     authenticated = true;
                 } else if (CONFIG.SHOW_AUTHENTICATION_FAILURE_ALERT) {
                     window.alert("Bad credentials");
+                    console.log(credentials);
                 }
             })
             .then(authenticated => {return authenticated;})

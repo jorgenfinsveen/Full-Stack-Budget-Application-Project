@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,14 +16,16 @@ import no.idata1002.group19.domain.repository.UserRepository;
 import no.idata1002.group19.service.JwtService;
 
 /**
- * Represents an Budget Controller class that is a RESTful
- * controller that handles the HTTP requests.
+ * Represents a Login Controller class that provides RESTful
+ * services to the /login endpoint with HTTP /POST mapping
+ * for login requests.
  * 
  * @author  Group19
  * @since   16.04.2023
  * @version 16.04.2023
  */
 @RestController
+@CrossOrigin
 public class LoginController {
 
     @Autowired

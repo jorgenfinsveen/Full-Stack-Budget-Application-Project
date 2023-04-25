@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class BudgetTest {
 
     @Test
-    void testConstructorValidInputs() {
+    public void testConstructorValidInputs() {
         LocalDate startDate = LocalDate.of(2023, 4, 18);
         LocalDate endDate = LocalDate.of(2023, 6, 18);
         Budget budget = new Budget(startDate, endDate, 0);

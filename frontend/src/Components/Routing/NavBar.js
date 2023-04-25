@@ -24,7 +24,7 @@ import { ActiveLink } from "./ActiveLink";
 export function NavBar(props) {
 
     const handleLogout = () => {
-        window.location.replace("/login");
+        window.location.replace("/");
     }
 
     /** 
@@ -72,7 +72,7 @@ export function NavBar(props) {
                     </ActiveLink>
                 </li>
                 <li id="li-login" onClick={handleLogout}>
-                    <ActiveLink to="/login">
+                    <ActiveLink to="/">
                         <FontAwesomeIcon icon={faRightFromBracket}/>
                     </ActiveLink>
                 </li>

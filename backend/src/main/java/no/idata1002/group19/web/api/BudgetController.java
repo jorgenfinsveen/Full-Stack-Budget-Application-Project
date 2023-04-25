@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,8 +21,8 @@ import no.idata1002.group19.domain.entity.BudgetCredentials;
 import no.idata1002.group19.domain.repository.BudgetRepository;
 
 /**
- * Represents an Budget Controller class that is a RESTful
- * controller that handles the HTTP requests.
+ * Represents a Budget Controller class which provides RESTful
+ * services to the Spring Boot application at the /budgets endpoint.
  * 
  * @author  Group19
  * @since   16.04.2023
@@ -29,6 +30,7 @@ import no.idata1002.group19.domain.repository.BudgetRepository;
  */
 @RestController
 @RequestMapping("/budgets")
+@CrossOrigin
 public class BudgetController {
 
     @Autowired

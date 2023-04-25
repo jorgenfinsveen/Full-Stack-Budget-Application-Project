@@ -11,8 +11,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 /**
- * Represents an JSON Web Token (JWT) service that generates
- * and validates JWT tokens.
+ * Represents an JSON Web Token (JWT) service which generates
+ * JWT Tokens upon user authentication, and to validate JWTs
+ * provided by the client to ensure the credibility of the
+ * given requests.
  *
  * @author  Group19
  * @since   16.04.2023
@@ -21,16 +23,22 @@ import java.util.Date;
 @Component
 public class JwtService {
 
+	/** Expiration time specifynig how long a JWT is valid. */
     static final long EXPIRATIONTIME = 86400000; // 1 day in ms
 
 	static final String PREFIX = "Bearer";
 
-	// Generate secret key. Only for the demonstration
-	// You should read it from the application configuration
+
 	static final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
 	
-	// Generate JWT token
+	/**
+	 * Generates a JWT Token with the given username and expiration time
+	 * which are to be returned to the client upon authorization.
+	 * 
+	 * @param username The username of the authenticated user.
+	 * @return Generated JSON Web Token as a String.
+	 */
 	public String getToken(String username) {
 		return Jwts.builder()
 			  .setSubject(username)
@@ -39,8 +47,13 @@ public class JwtService {
 			  .compact();
   	}
 
-	// Get a token from request Authorization header,
-    // parse a token and get username
+
+	/** 
+	 * Validates a JWT which a client has provided in its request header.
+	 * 
+	 * @param request The HTTP request which the client forwarded to the server.
+	 * @return String username of the user which the JWT was generated to.
+	 */
 	public String getAuthUser(HttpServletRequest request) {
         String token = request.getHeader(HttpHeaders.AUTHORIZATION);
         String user = null;

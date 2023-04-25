@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,14 +22,17 @@ import no.idata1002.group19.domain.repository.BudgetRepository;
 import no.idata1002.group19.domain.repository.UserRepository;
 
 /**
- * Controller class for user.
- * Controls the endpoints for user.
+ * Controller class responsible for providing RESTful services
+ * for the /users endpoint. Provides and specifies the functionality
+ * which are to be given to the client when using different HTTP
+ * request methods.
  *
  * @author Group19
  * @since 16.04.2023
  * @version 16.04.2023
  */
 @RestController
+@CrossOrigin
 public class UserController {
 
     @Autowired

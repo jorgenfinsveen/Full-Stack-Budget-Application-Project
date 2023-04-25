@@ -1,0 +1,103 @@
+{
+	"info": {
+		"_postman_id": "110fb298-a938-4ffa-a1ec-31caec301897",
+		"name": "IDATA1002",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25394859"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"user\",\n    \"password\": \"user\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://10.212.26.80:8090/login",
+					"protocol": "http",
+					"host": [
+						"10",
+						"212",
+						"26",
+						"80"
+					],
+					"port": "8090",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find budget by BudgetID",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://group10.web-tek.ninja:8090/api/budgets/2",
+					"protocol": "http",
+					"host": [
+						"group10",
+						"web-tek",
+						"ninja"
+					],
+					"port": "8090",
+					"path": [
+						"api",
+						"budgets",
+						"2"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "jwt",
+			"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyIiwiZXhwIjoxNjgyNTM2ODE5fQ.ZEBMY-ans_Ia-jGW1hY_yy04uSJHa0OzO5TwTFCcaPk"
+		}
+	]
+}

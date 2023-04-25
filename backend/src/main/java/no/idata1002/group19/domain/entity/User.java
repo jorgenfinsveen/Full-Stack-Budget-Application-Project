@@ -61,7 +61,7 @@ public class User {
      * @return if the string is correct it returns the string
      */
     private String stringChecker(String string, String prefiks) {
-        if (string.isEmpty()) {
+        if (string == null || string.isEmpty()) {
             throw new IllegalArgumentException("The string " + "'" + prefiks + "'" + " cant be empty or null");
         }
         return string;
@@ -169,8 +169,21 @@ public class User {
      * @return boolean statement. True if valid, false if not.
      */
     public boolean isValid() {
-        return this.username != null && !this.username.trim().isEmpty() &&
-                this.password != null && !this.password.trim().isEmpty() &&
-                this.role != null && !this.role.trim().isEmpty();
+        boolean valid = true;
+
+        if (username == null || username.isBlank()) {
+            valid = false;
+        } 
+        if (password == null || password.isBlank()) {
+            valid = false;
+        }
+        if (role == null || role.isBlank()) {
+            valid = false;
+        }
+        if (budget == null || !budget.isValid()) {
+            valid = false;
+        }
+
+        return valid;
     }
 }

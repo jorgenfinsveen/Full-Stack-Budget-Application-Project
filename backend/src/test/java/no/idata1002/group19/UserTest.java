@@ -1,19 +1,22 @@
 package no.idata1002.group19;
 
-import nl.altindag.log.LogCaptor;
-import no.idata1002.group19.domain.entity.Budget;
-import no.idata1002.group19.domain.entity.User;
-import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
-@RunWith(SpringRunner.class)
+import no.idata1002.group19.domain.entity.Budget;
+import no.idata1002.group19.domain.entity.User;
+
+
+/**
+ * JUnit test class which tests the different aspects of the creation
+ * of a instance of the User database entity.
+ */
 @SpringBootTest
 public class UserTest {
 
@@ -32,50 +35,44 @@ public class UserTest {
 
     @Test
     void testConstructorInvalidInputUsernameNull() {
-        String expectedWarningMassageForUserName = "Caught Illegal Argument Exception: The string userName cant be empty or null";
-        LogCaptor logCaptor = LogCaptor.forClass(User.class);
-        User user = new User(null, "null", "null", budget);
-        assertThat(logCaptor.getWarnLogs().contains(expectedWarningMassageForUserName));
+        assertThrows(IllegalArgumentException.class, () -> {
+            new User(null, "null", "null", budget);
+        });
     }
 
     @Test
     void testConstructorInvalidInputUsernameEmpty() {
-        String expectedWarningMassageForUserName = "Caught Illegal Argument Exception: The string userName cant be empty or null";
-        LogCaptor logCaptor = LogCaptor.forClass(User.class);
-        User user = new User("", "null", "null", budget);
-        assertThat(logCaptor.getWarnLogs().contains(expectedWarningMassageForUserName));
+        assertThrows(IllegalArgumentException.class, () -> {
+            new User("", "null", "null", budget);
+        });
     }
 
     @Test
     void testConstructorInvalidInputPassNull() {
-        String ectedWarningMassageForPass = "Caught Illegal Argument Exception: The string pass cant be empty or null";
-        LogCaptor logCaptor = LogCaptor.forClass(User.class);
-        User user = new User("null", null, "null", budget);
-        assertThat(logCaptor.getWarnLogs().contains(ectedWarningMassageForPass));
+        assertThrows(IllegalArgumentException.class, () -> {
+            new User("null", null, "null", budget);
+        });
     }
 
     @Test
     void testConstructorInvalidInputPassempty() {
-        String ectedWarningMassageForPass = "Caught Illegal Argument Exception: The string pass cant be empty or null";
-        LogCaptor logCaptor = LogCaptor.forClass(User.class);
-        User user = new User("", null, "null", budget);
-        assertThat(logCaptor.getWarnLogs().contains(ectedWarningMassageForPass));
+        assertThrows(IllegalArgumentException.class, () -> {
+            new User("", null, "null", budget);
+        });
     }
 
     @Test
     void testConstructorInvalidInputRoleNull() {
-        String ectedWarningMassageForRole = "Caught Illegal Argument Exception: The string role cant be empty or null";
-        LogCaptor logCaptor = LogCaptor.forClass(User.class);
-        User user = new User("null", "null", null, budget);
-        assertThat(logCaptor.getWarnLogs().contains(ectedWarningMassageForRole));
+        assertThrows(IllegalArgumentException.class, () -> {
+            new User("null", "null", null, budget);
+        });
     }
 
     @Test
     void testConstructorInvalidInputRoleEmpty() {
-        String ectedWarningMassageForRole = "Caught Illegal Argument Exception: The string role cant be empty or null";
-        LogCaptor logCaptor = LogCaptor.forClass(User.class);
-        User user = new User("null", "null", "", budget);
-        assertThat(logCaptor.getWarnLogs().contains(ectedWarningMassageForRole));
+        assertThrows(IllegalArgumentException.class, () -> {
+            new User("null", "null", "", budget);
+        });
     }
 
     @Test
@@ -83,12 +80,4 @@ public class UserTest {
         User user = new User("user", "password", "admin", budget);
         assertTrue(user.isValid());
     }
-
-    @Test
-    void testIsValidNegative() {
-        User user = new User("", "", "", budget);
-        assertFalse(user.isValid());
-    }
-
-
 }

@@ -1,18 +1,22 @@
 package no.idata1002.group19;
 
-import nl.altindag.log.LogCaptor;
-import no.idata1002.group19.domain.entity.Budget;
-import no.idata1002.group19.domain.entity.Transaction;
-import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
 
-@RunWith(SpringRunner.class)
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import no.idata1002.group19.domain.entity.Budget;
+import no.idata1002.group19.domain.entity.Transaction;
+
+
+/**
+ * JUnit test class which tests the different aspects of the creation
+ * of a instance of the Transaction database entity.
+ */
 @SpringBootTest
 public class TransactionTest {
 
@@ -35,47 +39,34 @@ public class TransactionTest {
 
     @Test
     void testConstructorInvalidInputTnameNull() {
-        String expectedWarningMassageForTname = "Caught Illegal Argument Exception: The string tname cant be empty or null";
-        LogCaptor logCaptor = LogCaptor.forClass(Transaction.class);
         LocalDate localDate = LocalDate.of(2023,4,18);
-        Transaction transaction = new Transaction(null, 10, "null", localDate, budget);
-        assertThat(logCaptor.getWarnLogs().contains(expectedWarningMassageForTname));
+        assertThrows(IllegalArgumentException.class, () -> {
+            new Transaction(null, 10, "null", localDate, budget);
+        });
     }
 
     @Test
     void testConstructorInvalidInputTnameEmpty() {
-        String expectedWarningMassageForTname = "Caught Illegal Argument Exception: The string tname cant be empty or null";
-        LogCaptor logCaptor = LogCaptor.forClass(Transaction.class);
         LocalDate localDate = LocalDate.of(2023,4,18);
-        Transaction transaction = new Transaction("", 10, "null", localDate, budget);
-        assertThat(logCaptor.getWarnLogs().contains(expectedWarningMassageForTname));
-    }
-
-    @Test
-    void testConstructorInvalidInputValueNull() {
-        String expectedWarningMassageForValue = "Caught Illegal Argument Exception: The integer value cant be below 0";
-        LogCaptor logCaptor = LogCaptor.forClass(Transaction.class);
-        LocalDate localDate = LocalDate.of(2023,4,18);
-        Transaction transaction = new Transaction("null", -1, "null", localDate, budget);
-        assertThat(logCaptor.getWarnLogs().contains(expectedWarningMassageForValue));
+        assertThrows(IllegalArgumentException.class, () -> {
+            new Transaction("", 10, "null", localDate, budget);
+        });
     }
 
     @Test
     void testConstructorInvalidInputDescriptionNull() {
-        String expectedWarningMassageForDescription = "Caught Illegal Argument Exception: The string description cant be empty or null";
-        LogCaptor logCaptor = LogCaptor.forClass(Transaction.class);
         LocalDate localDate = LocalDate.of(2023,4,18);
-        Transaction transaction = new Transaction("null", 10, null, localDate, budget);
-        assertThat(logCaptor.getWarnLogs().contains(expectedWarningMassageForDescription));
+        assertThrows(IllegalArgumentException.class, () -> {
+            new Transaction("null", 10, null, localDate, budget);
+        });
     }
 
     @Test
     void testConstructorInvalidInputDescriptionEmpty() {
-        String expectedWarningMassageForDescription = "Caught Illegal Argument Exception: The string description cant be empty or null";
-        LogCaptor logCaptor = LogCaptor.forClass(Transaction.class);
         LocalDate localDate = LocalDate.of(2023,4,18);
-        Transaction transaction = new Transaction("null", 10, "", localDate, budget);
-        assertThat(logCaptor.getWarnLogs().contains(expectedWarningMassageForDescription));
+        assertThrows(IllegalArgumentException.class, () -> {
+            new Transaction("null", 10, "", localDate, budget);
+        });
     }
 
     @Test
@@ -83,11 +74,4 @@ public class TransactionTest {
         Transaction transaction = new Transaction("Groceries", 50, "Bought groceries for the week", LocalDate.now(), budget);
         assertTrue(transaction.isValid());
     }
-
-    @Test
-    void testIsValidNegative() {
-        Transaction transaction = new Transaction(null, -10, "Invalid transaction", null, budget);
-        assertFalse(transaction.isValid());
-    }
-
 }

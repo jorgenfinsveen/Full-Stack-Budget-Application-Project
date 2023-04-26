@@ -1,3 +1,6 @@
+/**
+* Styling for the border in the main section.
+*/
 main {
     border-left: 1px solid black;
 }

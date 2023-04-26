@@ -1,6 +1,7 @@
 # Budgeting App
 
-Group project for IDATT1002 Software Engineer spring 2022 at NTNU Ålesund.
+
+Group project for IDATT1002 Software Engineering spring 2023 at NTNU Ålesund.
 
 <!-- TABLE OF CONTENTS -->
 <details>
@@ -17,10 +18,12 @@ Group project for IDATT1002 Software Engineer spring 2022 at NTNU Ålesund.
       <ul>
         <li><a href="#Prerequisites"> Prerequisites </a></li>
         <li><a href="#Installation">Installation</a></li>
-        <ul>
-           <li><a href="#Back-end">Back-end</a></li>
-           <li><a href="#Front-end">Front-end</a></li>
-        </ul>
+        <li>
+          <ul>
+            <li><a href="#Back-end">Back-end</a></li>
+            <li><a href="#Front-end">Front-end</a></li>
+          </ul>
+        </li>
       </ul>
     </li>
     <li><a href="#Demonstration">Demonstration</a></li>
@@ -34,7 +37,7 @@ Group project for IDATT1002 Software Engineer spring 2022 at NTNU Ålesund.
 
 Our project consists of developing a web application where users can manage their finances.
 
-<p align="right"><a href="#top">back to top</a></p>
+<p align="right"><a href="#top">Back to Top</a></p>
 
 ### Frameworks and Tools
 This project was created using the following:
@@ -47,7 +50,7 @@ This project was created using the following:
 - [OpenStack](https://www.openstack.org) cloud software for server deployment (provided by NTNU for the course IDATA2306)
 - [Apache Maven](https://maven.apache.org) software management tool for back-end management and comprehension
 
-<p align="right"><a href="#top">back to top</a></p>
+<p align="right"><a href="#top">Back to Top</a></p>
 
 ## Getting Started
 ### Prerequisites
@@ -108,7 +111,7 @@ This project was created using the following:
   * Username: user
   * Password: user
 
-<p align="right"><a href="#top">back to top</a></p>
+<p align="right"><a href="#top">Back to Top</a></p>
 
 
 ## Demonstration
@@ -167,7 +170,7 @@ The application is deployed and can also be visited online. For further informat
 ## License
 Distributed under NTNU. For educational purposes only
 
-<p align="right"><a href="#top">back to top</a></p>
+<p align="right"><a href="#top">Back to Top</a></p>
 
 
 ## Contact
@@ -182,5 +185,6 @@ Distributed under NTNU. For educational purposes only
 
 [Ole Kristan Dvergsdal](https://github.com/olekristianhd) - olekd@stud.ntnu.no
 
+---
 
-<p align="right"><a href="#top">back to top</a></p>
+<p align="right"><a href="#top">Back to Top</a></p>

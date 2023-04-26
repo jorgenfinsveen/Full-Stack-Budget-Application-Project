@@ -9,7 +9,9 @@ import {
 
 
 /** URL of the server which delivers the API. */
-const SERVER_URL = "http://group10.web-tek.ninja:8090";
+//const SERVER_URL = "http://group10.web-tek.ninja:8090";   // For deployment
+const SERVER_URL = "http://localhost:8090";                 // For localhost
+
 
 
 

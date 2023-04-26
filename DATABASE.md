@@ -22,6 +22,6 @@ An account has been made for the sensors which are to review this project. Throu
 ### Database account:
 
 * Database: <a href="https://phpmyadmin681.loopia.se/">phpMyAdmin</a>
-* Username: __sensor@f337104__
+* Username: sensor@f337104
 * Password: IDATA1002sensurNTNU
 * Privileges: Read only

@@ -15,11 +15,16 @@ Group project for IDATT1002 Software Engineer spring 2022 at NTNU Ålesund.
     <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
-        <li><a href="#development">Development</a></li>
-        <li><a href="#deployment">Deployment</a></li>
+        <li><a href="#Prerequisites"> Prerequisites </a></li>
+        <li><a href="#Installation">Installation</a></li>
+        <ul>
+           <li><a href="#Back-end">Back-end</a></li>
+           <li><a href="#Front-end">Front-end</a></li>
+        </ul>
       </ul>
     </li>
-    <li><a href="#functionality">Functionality</a></li>
+    <li><a href="#Demonstration">Demonstration</a></li>
+    <li><a href="#Application Functionality">Application Functionality</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
   </ol>
@@ -34,44 +39,93 @@ Our project consists of developing a web application where users can manage thei
 ### Frameworks and Tools
 This project was created using the following:
 
-- [Spring boot](https://spring.io/)
+- [Spring boot](https://spring.io/) Java framework for back-end development
+- [React](https://react.dev) JavaScript framework for front-end development
+- [Loopia](https://www.loopia.no) service provider for web- and database-hosting
+- [Postman](https://www.postman.com) software for testing API implementations 
+- [Git](https://git-scm.com) for version control of source code
+- [OpenStack](https://www.openstack.org) cloud software for server deployment (provided by NTNU for the course IDATA2306)
+- [Apache Maven](https://maven.apache.org) software management tool for back-end management and comprehension
 
 <p align="right"><a href="#top">back to top</a></p>
 
 ## Getting Started
 ### Prerequisites
 
-- [Java (17)](https://jdk.java.net/archive/)
+- [Java JDK 17](https://jdk.java.net/archive/)
 - [Maven (4.0.0)](https://maven.apache.org/)
+- [Node.js and npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 
-### Development
+### Installation
 
-1. Clone the repo
-
-   ```sh
-   git clone https://gitlab.stud.idi.ntnu.no/jorgenfinsveen/Budgeting-app/-/tree/main
-   ```
-
-2. Package the java application
+1. First step is to clone the repository, which can be done by executing the following command in the Terminal:
 
    ```sh
-   mvn clean && mvn package
+   git clone https://gitlab.stud.idi.ntnu.no/jorgenfinsveen/Budgeting-app.git
    ```
 
-3. run the java application
+#### Back-end
+
+1. Open a new Terminal window in the sub-directory of the cloned repository named _backend_
+
+2. Package the Java application by executing the following command:
+
+   ```sh
+   mvn clean package
+   ```
+
+3. Start the back-end application by executing the following command:
    ```sh
    mvn spring-boot:run
    ```
 
-### Deployment
+4. The back-end application should now be running on [localhost:8090](http://localhost:8090)
 
-1. Start Frontend in the terminal
+5. When visiting the above URL in the web browser, the message "Error: Full authentication is required to access this resource" should appear
+
+
+(0.) It is also possible to launch the back-end application by running the file named _BudgetApplication.jar_ located inside the backend directory by running the following command in the Terminal:
+   ```sh
+   java -jar BudgetApplication.jar
+   ```
+
+#### Front-end
+
+1. Open a new Terminal window in the sub-directory of the cloned repository named _frontend_
+
+2. Launch the front-end application by executing the following command:
 
    ```sh
    npm start
    ```
 
+3. The front-end application should now be running on [localhost:3000](http://localhost:3000/)
+
+4. When visiting the above URL in the web browser, the login-page for the application should appear.
+
+5. User may create a new account, or they can sign it with a pre-made account with the following credentials:
+
+  * Username: user
+  * Password: user
+
 <p align="right"><a href="#top">back to top</a></p>
+
+
+## Demonstration
+
+The application is deployed and can also be visited online. For further information regarding the deployment, please consult [DEPLOYMENT.md](https://gitlab.stud.idi.ntnu.no/jorgenfinsveen/Budgeting-app/-/blob/main/DEPLOYMENT.md).
+
+* Link to website: [Budget Application Demo](http://haslerud.tech/login)
+* Pre-made user:
+  * Username: user
+  * Password: user
+* Feel free to create new accounts as well (username must be unique)
+
+**Note**: There is no guarantee that the website works to the same degree as when the project is running on localhost. There has been some problems regarding CORS security and HTTP to HTTPS request forwarding, which may prevent login attempts. These are problems related to the settings of the given browser, the extensions installed, and other configurations. We would recommend to visit the demo application using a browser without extensions, and on either NTNU's network or using NTNU's VPN. 
+
+
+
+## Application Functionality
 
 <table>
     <thead>
@@ -82,8 +136,8 @@ This project was created using the following:
         <td>
             <h4>Account Management</h4>
             <ul>
-                <li>create account</li>
-                <li>Log in to existing account</li>
+                <li>Create a new account</li>
+                <li>Log in to an existing account</li>
             </ul>
         </td>
     </tr>
@@ -91,8 +145,10 @@ This project was created using the following:
         <td>
             <h4>Analytics</h4>
             <ul>
-                <li>See analytics of it's own budget</li>
-                <li>Displaying year and month</li>
+                <li>See analytics of their own budget</li>
+                <li>Display budget transactions at given dates</li>
+                <li>Add, delete, or edit transactions</li>
+                <li>Modify the budget margins, start- and end-date</li>
             </ul>
         </td>
     </tr>
@@ -107,10 +163,12 @@ This project was created using the following:
 </tbody>
 </table>
 
+
 ## License
 Distributed under NTNU. For educational purposes only
 
 <p align="right"><a href="#top">back to top</a></p>
+
 
 ## Contact
   
@@ -120,9 +178,9 @@ Distributed under NTNU. For educational purposes only
 
 [Håvard Hetland Vestbø](https://github.com/havardhvestbo) - haavarhv@stud.ntnu.no
 
-Petter Edvardsen
+[Petter Edvardsen](https://github.com/Edvardsn) - petteed@stud.ntnu.no
 
-Ole Kristan Dvergsdal
+[Ole Kristan Dvergsdal](https://github.com/olekristianhd) - olekd@stud.ntnu.no
 
 
 <p align="right"><a href="#top">back to top</a></p>

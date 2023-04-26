@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"no.idata1002.group19"},{"l":"no.idata1002.group19.domain.entity"},{"l":"no.idata1002.group19.domain.repository"},{"l":"no.idata1002.group19.service"},{"l":"no.idata1002.group19.web.api"}];updateSearchResults();

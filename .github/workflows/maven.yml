@@ -41,6 +41,6 @@ jobs:
     - name: Upload Plugin jar
       uses: actions/upload-artifact@v3
       with:
-        name: Plugin-${{ env.snapshotVersion }}-${{ env.git_hash }}.jar
+        name: BudgetApplication.jar
         path: ${{ env.artifactPath }}/Plugin-${{ env.snapshotVersion }}.jar
         

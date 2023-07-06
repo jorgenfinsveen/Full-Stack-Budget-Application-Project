@@ -57,6 +57,6 @@ public class AuthenticationTest {
                     .content("{\"username\":\"hello\",\"password\":\"world\"}")
                     .header(HttpHeaders.CONTENT_TYPE, "application/json")
                 )
-            .andDo(print()).andExpect(status().isUnauthorized());
+            .andDo(print()).andExpect(status().isForbidden());
     }
 }

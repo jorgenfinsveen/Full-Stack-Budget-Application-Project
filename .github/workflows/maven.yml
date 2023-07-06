@@ -42,5 +42,5 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: BudgetApplication.jar
-        path: ${{ env.artifactPath }}/Plugin-${{ env.snapshotVersion }}.jar
+        path: ${{ env.artifactPath }}/BudgetApplication.jar
         

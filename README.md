@@ -1,5 +1,8 @@
 # Budgeting App
 
+<br/>
+
+[![github actions ci badge]][github actions ci]
 
 Group project for IDATT1002 Software Engineering spring 2023 at NTNU Ålesund.
 
@@ -188,3 +191,13 @@ Distributed under NTNU. For educational purposes only
 ---
 
 <p align="right"><a href="#top">Back to Top</a></p>
+
+
+
+[github actions ci badge]:
+    <https://github.com/openssl/openssl/workflows/GitHub%20CI/badge.svg>
+    "GitHub Actions CI Status"
+
+[github actions ci]:
+    <https://github.com/jorgenfinsveen/Full-Stack-Budget-Application-Project/actions>
+    "GitHub Actions CI"

@@ -195,7 +195,7 @@ Distributed under NTNU. For educational purposes only
 
 
 [github actions ci badge]:
-    <https://github.com/openssl/openssl/workflows/GitHub%20CI/badge.svg>
+    <https://github.com/jorgenfinsveen/Full-Stack-Budget-Application-Project/workflows/Java%20CI%20with%20Maven/badge.svg>
     "GitHub Actions CI Status"
 
 [github actions ci]:
